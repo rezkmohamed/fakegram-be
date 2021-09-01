@@ -1,5 +1,8 @@
 package socialnetwork.beta.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -30,6 +33,61 @@ public class Profile {
 	
 	@Column(name="password")
 	private String password;
+	
+	@OneToMany(fetch=FetchType.LAZY,
+			   mappedBy="profile",
+			   cascade= CascadeType.ALL)
+	private List<Post> posts;
+	
+	@OneToMany(mappedBy="followed",
+			   cascade=CascadeType.ALL,
+			   fetch=FetchType.LAZY)
+	private List<Follow> followers;
+	
+	@OneToMany(mappedBy="follower",
+			   cascade=CascadeType.ALL,
+			   fetch=FetchType.LAZY)
+	private List<Follow> following;
+	
+	@OneToMany(mappedBy="profile",
+			   cascade=CascadeType.ALL,
+			   fetch=FetchType.LAZY)
+	private List<Comment> comments;
+	
+	@OneToMany(mappedBy="profileLiker",
+			   cascade=CascadeType.ALL,
+			   fetch=FetchType.LAZY)
+	private List<Like> likes;
+	
+	@OneToMany(mappedBy="profile",
+			   cascade=CascadeType.ALL,
+			   fetch=FetchType.LAZY)
+	private List<CommentLike> commentLikes;
+
+	@OneToMany(mappedBy="firstProfile",
+			   cascade=CascadeType.ALL,
+			   fetch=FetchType.LAZY)
+	private List<Conversation> conversations;
+
+	@OneToMany(mappedBy="profileSender", 
+			   cascade=CascadeType.ALL,
+			   fetch=FetchType.LAZY)
+	private List<Message> messagesSented;
+	
+	@OneToMany(mappedBy="profileReciver",
+			   cascade=CascadeType.ALL,
+			   fetch=FetchType.LAZY)
+	private List<Message> messagesRecived;
+	
+	@OneToMany(mappedBy="profileNotificator",
+			   cascade=CascadeType.ALL,
+			   fetch=FetchType.LAZY)
+	private List<Notification> notificationsSented;
+	
+	@OneToMany(mappedBy="profileToNotify",
+			   cascade=CascadeType.ALL,
+			   fetch=FetchType.LAZY)
+	private List<Notification> notificationsRecived;
 	
 	public Profile() {}
 	
@@ -98,4 +156,141 @@ public class Profile {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
+	
+	public void addPost(Post post) {
+		if(this.posts == null) {
+			this.posts = new ArrayList<>();
+		}
+		
+		this.posts.add(post);
+	}
+	
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+	
+	public void addComment(Comment comment) {
+		if(comments == null) {
+			comments = new ArrayList<>();
+		}
+		
+		comments.add(comment);
+	}
+	
+	public List<Follow> getFollowers() {
+		return followers;
+	}
+
+	public void setFollowers(List<Follow> followers) {
+		this.followers = followers;
+	}
+	
+	public void addFollower(Follow follow) {
+		if(followers == null) {
+			followers = new ArrayList<>();
+		}
+		
+		followers.add(follow);
+	}
+	
+	public List<Follow> getFollowing() {
+		return following;
+	}
+
+	public void setFollowing(List<Follow> following) {
+		this.following = following;
+	}
+	
+	public void addFollowing(Follow follow) {
+		if(following == null) {
+			following = new ArrayList<>();
+		}
+		
+		following.add(follow);
+	}
+
+	public List<Like> getLikes() {
+		return likes;
+	}
+
+	public void setLikes(List<Like> likes) {
+		this.likes = likes;
+	}
+
+	public void addLike(Like like) {
+		if(likes == null) {
+			likes = new ArrayList<>();
+		}
+		
+		likes.add(like);
+	}
+	
+	public List<CommentLike> getCommentLikes() {
+		return commentLikes;
+	}
+
+	public void setCommentLikes(List<CommentLike> commentLike) {
+		this.commentLikes = commentLike;
+	}
+	
+	public void addCommentLike(CommentLike commentLike) {
+		if(this.commentLikes == null) {
+			this.commentLikes = new ArrayList<>();
+		}
+		
+		this.commentLikes.add(commentLike);
+	}
+	
+	public List<Conversation> getConversations() {
+		return conversations;
+	}
+
+	public void setConversations(List<Conversation> conversations) {
+		this.conversations = conversations;
+	}
+	
+	public List<Message> getMessagesSented() {
+		return messagesSented;
+	}
+
+	public void setMessagesSented(List<Message> messagesSented) {
+		this.messagesSented = messagesSented;
+	}
+
+	public List<Message> getMessagesRecived() {
+		return messagesRecived;
+	}
+
+	public void setMessagesRecived(List<Message> messagesRecived) {
+		this.messagesRecived = messagesRecived;
+	}
+
+	public List<Notification> getNotificationsSented() {
+		return notificationsSented;
+	}
+
+	public void setNotificationsSented(List<Notification> notificationsSented) {
+		this.notificationsSented = notificationsSented;
+	}
+
+	public List<Notification> getNotificationsRecived() {
+		return notificationsRecived;
+	}
+
+	public void setNotificationsRecived(List<Notification> notificationsRecived) {
+		this.notificationsRecived = notificationsRecived;
+	}
+
 }
