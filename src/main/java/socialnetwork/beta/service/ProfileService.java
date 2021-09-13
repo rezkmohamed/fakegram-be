@@ -2,6 +2,7 @@ package socialnetwork.beta.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
 
 import socialnetwork.beta.dto.ProfileDTO;
 
@@ -18,6 +19,8 @@ public interface ProfileService {
 	public ProfileDTO findProfileById(String idProfile);
 	
 	public boolean saveProfile(ProfileDTO profile);
+	
+	public boolean uploadProfilePic(MultipartFile file, ProfileDTO profile);
 	
 	public boolean updateProfile(ProfileDTO profileDTO);
 

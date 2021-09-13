@@ -101,6 +101,15 @@ public class Profile {
 		this.password = password;
 	}
 
+	public Profile(String name, String nickname, String bio, String proPic, String email) {
+		super();
+		this.name = name;
+		this.nickname = nickname;
+		this.bio = bio;
+		this.proPic = proPic;
+		this.email = email;
+	}
+
 	public String getIdProfile() {
 		return idProfile;
 	}
