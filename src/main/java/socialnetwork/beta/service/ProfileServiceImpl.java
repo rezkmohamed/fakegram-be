@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Transactional;
 
 import socialnetwork.beta.dto.ProfileDTO;
 import socialnetwork.beta.entity.Profile;
@@ -20,6 +21,7 @@ public class ProfileServiceImpl implements ProfileService {
 	private ProfileRepo profileRepo;
 
 	@Override
+	@Transactional
 	public List<ProfileDTO> findProfilesLikesPost(String idPost) {
 		List<Profile> profiles = profileRepo.findProfilesLikesPost(idPost);
 		
@@ -27,6 +29,7 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 
 	@Override
+	@Transactional
 	public List<ProfileDTO> findFollowersProfile(String idProfile) {
 		List<Profile> profiles = profileRepo.findFollowersProfile(idProfile);
 		
@@ -34,6 +37,7 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 
 	@Override
+	@Transactional
 	public List<ProfileDTO> findFollowingProfile(String idProfile) {
 		List<Profile> profiles = profileRepo.findFollowingProfile(idProfile);
 		
@@ -41,12 +45,15 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 
 	@Override
-	public List<ProfileDTO> searchProfilesByName(String profileName, int startingIndex) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public List<ProfileDTO> searchProfilesByName(String profileName) {
+		List<Profile> profiles = profileRepo.findProfilesByName(profileName);
+		
+		return ProfileUtils.profileToDTO(profiles);
 	}
 
 	@Override
+	@Transactional
 	public ProfileDTO findProfileById(String idProfile) {
 		Profile profile = profileRepo.findProfile(idProfile);
 		if(profile != null) {
@@ -57,6 +64,7 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 
 	@Override
+	@Transactional
 	public boolean saveProfile(ProfileDTO profile) {
 		Profile profileToSave = ProfileUtils.DTOProfileToProfileEntity(profile);
 		profileRepo.saveProfile(profileToSave);
@@ -65,6 +73,7 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 
 	@Override
+	@Transactional
 	public boolean updateProfile(ProfileDTO profileDTO) {
 		Profile profileToUpdate = ProfileUtils.DTOProfileToProfileEntity(profileDTO);
 		profileRepo.updateProfile(profileToUpdate);
@@ -73,6 +82,7 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 
 	@Override
+	@Transactional
 	public boolean uploadProfilePic(MultipartFile file, ProfileDTO profile) {
 		
 		

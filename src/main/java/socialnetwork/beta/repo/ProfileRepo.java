@@ -12,6 +12,8 @@ public interface ProfileRepo {
 	
 	public List<Profile> findFollowingProfile(String idProfile);
 	
+	public List<Profile> findProfilesByName(String nameLike);
+	
 	public Profile findProfileByEmail(String email);
 	
 	public Profile findProfile(String idProfile);
