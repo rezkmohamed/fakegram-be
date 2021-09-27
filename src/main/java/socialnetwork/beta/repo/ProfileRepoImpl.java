@@ -56,7 +56,7 @@ public class ProfileRepoImpl implements ProfileRepo{
 	public List<Profile> findProfilesByName(String nameLike) {
 		Session session = entityManager.unwrap(Session.class);
 		Query<Profile> query = session.createQuery("from Profile where name like :nameLike");
-		query.setParameter("nameLike", nameLike);
+		query.setParameter("nameLike", "%"+nameLike+"%");
 		List<Profile> profiles = query.getResultList();
 		
 		return profiles;

@@ -19,7 +19,7 @@ public class ProfileController {
 	@Autowired
 	private ProfileService profileService;
 	
-	@GetMapping("")
+	@GetMapping("/search/{nameLike}")
 	public ResponseEntity<List<ProfileDTO>> getSearchProfiles(@PathVariable String nameLike){
 		List<ProfileDTO> profiles = profileService.searchProfilesByName(nameLike);
 		if(profiles != null) {
