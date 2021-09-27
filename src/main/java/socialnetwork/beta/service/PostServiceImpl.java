@@ -9,17 +9,27 @@ import org.springframework.transaction.annotation.Transactional;
 import socialnetwork.beta.dto.PostDTO;
 import socialnetwork.beta.entity.Post;
 import socialnetwork.beta.repo.PostRepo;
+import socialnetwork.beta.repo.ProfileRepo;
 import socialnetwork.beta.utils.PostUtils;
+import socialnetwork.beta.utils.ProfileUtils;
 
 @Service
 public class PostServiceImpl implements PostService {
 	@Autowired
 	private PostRepo postRepo;
+	@Autowired
+	private ProfileRepo profileRepo;
 
 	@Override
 	@Transactional
 	public List<PostDTO> findAllPosts() {
-		return PostUtils.postToDTO(postRepo.findAllPosts());
+		List<PostDTO> posts = PostUtils.postToDTO(postRepo.findAllPosts());
+		
+		posts.stream().forEach(p -> {
+			p.setProfile(ProfileUtils.profileToDTO(profileRepo.findProfile(p.getIdProfile())));
+		});
+		
+		return posts;
 	}
 
 	@Override
