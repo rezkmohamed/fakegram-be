@@ -41,7 +41,10 @@ public class PostServiceImpl implements PostService {
 	@Override
 	@Transactional
 	public PostDTO findPostById(String idPost) {		
-		return PostUtils.postToDTO(postRepo.findPostById(idPost));
+		PostDTO post = PostUtils.postToDTO(postRepo.findPostById(idPost));
+		post.setProfile(ProfileUtils.profileToDTO(profileRepo.findProfile(post.getIdProfile())));
+		
+		return post;
 	}
 
 	@Override
