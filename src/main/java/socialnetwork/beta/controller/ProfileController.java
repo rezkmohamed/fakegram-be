@@ -33,10 +33,8 @@ public class ProfileController {
 	public ResponseEntity<ProfileDTO> getProfileById(@PathVariable String idProfile){
 		ProfileDTO profile = profileService.findProfileById(idProfile);
 		if(profile != null) {
-			System.out.println("OKAY - " + profile);
 			return new ResponseEntity<>(profile, HttpStatus.OK);
 		}
-		System.out.println("NOT OKAY");
 		return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 	}
 

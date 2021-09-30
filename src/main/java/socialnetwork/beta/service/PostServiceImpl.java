@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import socialnetwork.beta.dto.PostDTO;
 import socialnetwork.beta.entity.Post;
+import socialnetwork.beta.entity.Profile;
 import socialnetwork.beta.repo.PostRepo;
 import socialnetwork.beta.repo.ProfileRepo;
 import socialnetwork.beta.utils.PostUtils;
@@ -51,6 +52,8 @@ public class PostServiceImpl implements PostService {
 	@Transactional
 	public String savePost(PostDTO post) {
 		Post postToSave = PostUtils.DTOPostToPostEntity(post);
+		Profile profile = profileRepo.findProfile(post.getIdProfile());
+		postToSave.setProfile(profile);
 		
 		return postRepo.savePost(postToSave);
 	}
