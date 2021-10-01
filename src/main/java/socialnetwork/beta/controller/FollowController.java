@@ -18,8 +18,6 @@ import socialnetwork.beta.service.ProfileService;
 public class FollowController {
 	@Autowired
 	private FollowService followService;
-	@Autowired
-	private ProfileService profileService;
 	
 	@GetMapping("/{idProfileFollower}/checkfollow/{idProfileFollowed}")
 	public ResponseEntity<Boolean> getIsFollowing(@PathVariable String idProfileFollower, @PathVariable String idProfileFollowed){
