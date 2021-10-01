@@ -35,6 +35,23 @@ public class FollowRepoImpl implements FollowRepo {
 		
 		return following;
 	}
+	
+	@Override
+	public Follow getFollow(String idProfileFollower, String idProfileFollowed) {
+		Session session = entityManager.unwrap(Session.class);
+		Query<Follow> query = session.createQuery("from Follow where id_follower = :idProfileFollower AND id_followed = :idProfileFollowed");
+		query.setParameter("idProfileFollower", idProfileFollower);
+		query.setParameter("idProfileFollowed", idProfileFollowed);
+		try {
+			Follow follow = query.getSingleResult();
+			return follow;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
 
 	@Override
 	public String addFollow(Follow follow) {
@@ -55,5 +72,4 @@ public class FollowRepoImpl implements FollowRepo {
 
 		return true;
 	}
-
 }

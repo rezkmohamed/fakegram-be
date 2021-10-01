@@ -11,5 +11,7 @@ public interface FollowRepo {
 	
 	public String addFollow(Follow follow);
 	
+	public Follow getFollow(String idProfileFollower, String idProfileFollowed);
+	
 	public boolean deleteFollow(String idProfileFollower, String idProfileFollowed);
 }

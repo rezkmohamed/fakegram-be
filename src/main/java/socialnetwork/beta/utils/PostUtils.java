@@ -13,6 +13,7 @@ public class PostUtils {
 									  post.getImg_post(), 
 									  post.getDescription(), 
 									  post.getProfile().getIdProfile());
+		postDTO.setDate(post.getDate());
 
 		return postDTO;
 	}
@@ -27,7 +28,7 @@ public class PostUtils {
 	}
 	
 	public static Post DTOPostToPostEntity(PostDTO postDTO) {
-		Post post = new Post(postDTO.getUrlImg(), 
+		Post post = new Post(postDTO.getImg(), 
 							 postDTO.getDescription(), 
 							 new Date());
 

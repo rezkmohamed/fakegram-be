@@ -19,7 +19,7 @@ public class PostRepoImpl implements PostRepo {
 	@Override
 	public List<Post> findAllPosts() {
 		Session session = entityManager.unwrap(Session.class);
-		Query<Post> query = session.createQuery("from Post", Post.class);
+		Query<Post> query = session.createQuery("from Post ORDER BY date DESC", Post.class);
 		
 		return query.getResultList();
 	}
@@ -27,7 +27,7 @@ public class PostRepoImpl implements PostRepo {
 	@Override
 	public List<Post> findPostsProfilePage(String idProfile) {
 		Session session = entityManager.unwrap(Session.class);
-		Query<Post> query = session.createQuery("from Post where id_profile=:idProfile");
+		Query<Post> query = session.createQuery("from Post where id_profile=:idProfile ORDER BY date DESC");
 		query.setParameter("idProfile", idProfile);
 		List<Post> posts = query.getResultList();
 		

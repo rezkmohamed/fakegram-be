@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,15 @@ public class FollowController {
 	private FollowService followService;
 	@Autowired
 	private ProfileService profileService;
+	
+	@GetMapping("/{idProfileFollower}/checkfollow/{idProfileFollowed}")
+	public ResponseEntity<Boolean> getIsFollowing(@PathVariable String idProfileFollower, @PathVariable String idProfileFollowed){
+		if(followService.checkFollow(idProfileFollower, idProfileFollowed)) {
+			return new ResponseEntity<>(true,HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<>(false, HttpStatus.OK);
+	}
 	
 	@PostMapping("/{idProfileFollower}/follows/{idProfileFollowed}")
 	public ResponseEntity<HttpStatus> addNewFollow(@PathVariable String idProfileFollower, @PathVariable String idProfileFollowed){

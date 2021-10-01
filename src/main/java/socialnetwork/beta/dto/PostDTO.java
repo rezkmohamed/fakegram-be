@@ -19,10 +19,10 @@ public class PostDTO {
 	
 	public PostDTO() {}
 
-	public PostDTO(String idPost, String urlImg, String description, String idProfile) {
+	public PostDTO(String idPost, String img, String description, String idProfile) {
 		super();
 		this.idPost = idPost;
-		this.img = urlImg;
+		this.img = img;
 		this.description = description;
 		this.idProfile = idProfile;
 	}
@@ -35,12 +35,12 @@ public class PostDTO {
 		this.idPost = idPost;
 	}
 
-	public String getUrlImg() {
+	public String getImg() {
 		return img;
 	}
 
-	public void setUrlImg(String urlImg) {
-		this.img = urlImg;
+	public void setImg(String img) {
+		this.img = img;
 	}
 
 	public String getDescription() {
