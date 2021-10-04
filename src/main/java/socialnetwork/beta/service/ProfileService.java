@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import socialnetwork.beta.dto.ProfileDTO;
+import socialnetwork.beta.dto.UserDTO;
 
 
 public interface ProfileService {
@@ -17,6 +18,8 @@ public interface ProfileService {
 	public List<ProfileDTO> searchProfilesByName(String profileName);
 	
 	public ProfileDTO findProfileById(String idProfile);
+	
+	public UserDTO getProfileByEmailAndPassword(String email, String password);
 	
 	public boolean saveProfile(ProfileDTO profile);
 	
