@@ -14,6 +14,8 @@ public interface ProfileRepo {
 	
 	public List<Profile> findProfilesByName(String nameLike);
 	
+	public Profile findProfileByEmailAndPassword(String email, String password);
+	
 	public Profile findProfileByEmail(String email);
 	
 	public Profile findProfile(String idProfile);

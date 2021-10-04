@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.transaction.annotation.Transactional;
 
 import socialnetwork.beta.dto.ProfileDTO;
+import socialnetwork.beta.dto.UserDTO;
 import socialnetwork.beta.entity.Profile;
 import socialnetwork.beta.repo.ProfileRepo;
 import socialnetwork.beta.utils.ImgUtils;
@@ -91,6 +92,17 @@ public class ProfileServiceImpl implements ProfileService {
 		
 		
 		return false;
+	}
+
+	@Override
+	@Transactional
+	public UserDTO getProfileByEmailAndPassword(String email, String password) {
+		Profile profile = profileRepo.findProfileByEmailAndPassword(email, password);
+		if(profile == null) {
+			return null;
+		}
+		
+		return ProfileUtils.ProfileToUserDTO(profile);
 	}
 
 }

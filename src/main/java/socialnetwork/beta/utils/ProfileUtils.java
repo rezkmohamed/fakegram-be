@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import socialnetwork.beta.dto.ProfileDTO;
+import socialnetwork.beta.dto.UserDTO;
 import socialnetwork.beta.entity.Profile;
 
 
@@ -30,6 +31,12 @@ public class ProfileUtils {
 	
 	public static Profile DTOProfileToProfileEntity(ProfileDTO profileDTO) {
 		Profile ris = new Profile(profileDTO.getName(), profileDTO.getNickname(), profileDTO.getBio(), profileDTO.getProPic(), profileDTO.getEmail());
+		
+		return ris;
+	}
+	
+	public static UserDTO ProfileToUserDTO(Profile profile) {
+		UserDTO ris = new UserDTO(profile.getIdProfile(), profile.getNickname(), profile.getEmail(), profile.getPassword());
 		
 		return ris;
 	}

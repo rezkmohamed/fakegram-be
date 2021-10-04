@@ -97,4 +97,21 @@ public class ProfileRepoImpl implements ProfileRepo{
 		
 		session.update(profile);		
 	}
+
+	@Override
+	public Profile findProfileByEmailAndPassword(String email, String password) {
+		Session session = entityManager.unwrap(Session.class);
+		Query<Profile> query = session.createQuery("from Profile where email = :email AND password = :password");
+		query.setParameter("email", email);
+		query.setParameter("password", password);
+		
+		try {
+			Profile profile = query.getSingleResult();
+			return profile;
+		} catch (Exception e) {
+			System.out.println("USER" + email + "NOT EXIST IN DATABASE");
+		}
+		
+		return null;
+	}
 }
