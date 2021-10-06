@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.Jwts;
+import socialnetwork.beta.dto.ProfileDTO;
 import socialnetwork.beta.dto.UserDTO;
 import socialnetwork.beta.service.ProfileService;
 
@@ -46,6 +47,15 @@ public class AuthController {
 		}
 		
 		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+	}
+	
+	@PostMapping("/register")
+	public ResponseEntity<Boolean> register(@RequestBody ProfileDTO profileToRegister){
+		if(profileService.saveProfile(profileToRegister)) {
+			return new ResponseEntity<>(true, HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
 	}
 
 }

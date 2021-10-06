@@ -67,6 +67,10 @@ public class ProfileServiceImpl implements ProfileService {
 	@Override
 	@Transactional
 	public boolean saveProfile(ProfileDTO profile) {
+		Profile profileCheckIfEmailExists = profileRepo.findProfileByEmail(profile.getEmail());
+		if(profileCheckIfEmailExists != null) {
+			return false;
+		}
 		Profile profileToSave = ProfileUtils.DTOProfileToProfileEntity(profile);
 		profileRepo.saveProfile(profileToSave);
 		
