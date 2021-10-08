@@ -68,7 +68,9 @@ public class PostController {
 	}
 	
 	@PostMapping("/save")
-	public ResponseEntity<HttpStatus> savePost(@RequestBody PostDTO postDTO){
+	public ResponseEntity<HttpStatus> savePost(@RequestBody PostDTO postDTO, HttpServletRequest request){
+		String idProfile = requestUtils.idProfileFromToken(request);
+		postDTO.setIdProfile(idProfile);
 		String response = postService.savePost(postDTO);
 		if(response == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

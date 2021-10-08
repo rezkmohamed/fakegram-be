@@ -1,5 +1,7 @@
 package socialnetwork.beta.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,15 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import socialnetwork.beta.service.FollowService;
 import socialnetwork.beta.service.ProfileService;
+import socialnetwork.beta.utils.RequestUtils;
 
 @RestController
 @RequestMapping("followers")
 public class FollowController {
 	@Autowired
 	private FollowService followService;
+	@Autowired
+	private RequestUtils requestUtils;
 	
 	@GetMapping("/{idProfileFollower}/checkfollow/{idProfileFollowed}")
-	public ResponseEntity<Boolean> getIsFollowing(@PathVariable String idProfileFollower, @PathVariable String idProfileFollowed){
+	public ResponseEntity<Boolean> getIsFollowing(@PathVariable String idProfileFollowed, HttpServletRequest request){
+		String idProfileFollower = requestUtils.idProfileFromToken(request);
 		if(followService.checkFollow(idProfileFollower, idProfileFollowed)) {
 			return new ResponseEntity<>(true,HttpStatus.OK);
 		}
@@ -28,8 +34,9 @@ public class FollowController {
 		return new ResponseEntity<>(false, HttpStatus.OK);
 	}
 	
-	@PostMapping("/{idProfileFollower}/follows/{idProfileFollowed}")
-	public ResponseEntity<HttpStatus> addNewFollow(@PathVariable String idProfileFollower, @PathVariable String idProfileFollowed){
+	@PostMapping("/follows/{idProfileFollowed}")
+	public ResponseEntity<HttpStatus> addNewFollow(@PathVariable String idProfileFollowed, HttpServletRequest request){
+		String idProfileFollower = requestUtils.idProfileFromToken(request);
 		String newIdFollow = followService.addFollow(idProfileFollower, idProfileFollowed);
 		if(newIdFollow == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -38,8 +45,9 @@ public class FollowController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/{idProfileFollower}/unfollow/{idProfileFollowed}")
-	public ResponseEntity<HttpStatus> deleteFollow(@PathVariable String idProfileFollower, @PathVariable String idProfileFollowed){
+	@DeleteMapping("/unfollow/{idProfileFollowed}")
+	public ResponseEntity<HttpStatus> deleteFollow(@PathVariable String idProfileFollowed, HttpServletRequest request){
+		String idProfileFollower = requestUtils.idProfileFromToken(request);
 		if(followService.deleteFollow(idProfileFollower, idProfileFollowed)) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
