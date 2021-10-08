@@ -9,6 +9,7 @@ public class ProfileDTO {
 	private String bio;
 	private String proPic;
 	private String email;
+	private String password;
 	private List<PostDTO> posts;
 	private int postsCounter;
 	private List<FollowDTO> followers;
@@ -123,11 +124,18 @@ public class ProfileDTO {
 	public void setPostsCounter(int postsCounter) {
 		this.postsCounter = postsCounter;
 	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	
 	@Override
 	public String toString() {
 		return "ProfileDTO [id=" + id + ", name=" + name + ", nickname=" + nickname + ", bio=" + bio + ", proPic="
 				+ proPic + ", email=" + email + "]";
 	}
-
 }

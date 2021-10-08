@@ -16,8 +16,8 @@ import socialnetwork.beta.utils.ProfileUtils;
 
 @Service
 public class ProfileServiceImpl implements ProfileService {
-	@Autowired
-	private ImgUtils imgUtils;
+//	@Autowired
+//	private ImgUtils imgUtils;
 	@Autowired
 	private ProfileRepo profileRepo;
 
@@ -71,7 +71,7 @@ public class ProfileServiceImpl implements ProfileService {
 		if(profileCheckIfEmailExists != null) {
 			return false;
 		}
-		Profile profileToSave = ProfileUtils.DTOProfileToProfileEntity(profile);
+		Profile profileToSave = ProfileUtils.prepareProfileToRegister(profile);
 		profileRepo.saveProfile(profileToSave);
 		
 		return true;
@@ -80,7 +80,7 @@ public class ProfileServiceImpl implements ProfileService {
 	@Override
 	@Transactional
 	public boolean updateProfile(ProfileDTO profileDTO) {
-		Profile profileToUpdate = ProfileUtils.DTOProfileToProfileEntity(profileDTO);
+		Profile profileToUpdate = ProfileUtils.prepareProfileToRegister(profileDTO);
 		profileRepo.updateProfile(profileToUpdate);
 		
 		return true;

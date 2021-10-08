@@ -2,6 +2,9 @@ package socialnetwork.beta.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.catalina.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,7 @@ import socialnetwork.beta.dto.PostDTO;
 import socialnetwork.beta.dto.ProfileDTO;
 import socialnetwork.beta.service.PostService;
 import socialnetwork.beta.service.ProfileService;
+import socialnetwork.beta.utils.RequestUtils;
 
 @RestController
 @RequestMapping("/posts")
@@ -25,9 +29,11 @@ public class PostController {
 	private PostService postService;
 	@Autowired
 	private ProfileService profileService;
+	@Autowired
+	private RequestUtils requestUtils;
 	
 	@GetMapping("")
-	public ResponseEntity<List<PostDTO>> getAllPosts(){
+	public ResponseEntity<List<PostDTO>> getAllPosts(HttpServletRequest request){
 		List<PostDTO> posts = postService.findAllPosts();
 		
 		if(posts == null) {

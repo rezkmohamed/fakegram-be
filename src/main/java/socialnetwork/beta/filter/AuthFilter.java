@@ -43,8 +43,10 @@ public class AuthFilter extends OncePerRequestFilter{
 			response.sendError(401);
 			return;
 		}
-
+		
+		System.out.println(header);
 		String token = header.replace("Bearer ", "");
+		System.out.println(token);
 		Jwts.parser().setSigningKey(this.signingKey).parseClaimsJws(token).getBody();
 				
 		filterChain.doFilter(request, response);

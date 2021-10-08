@@ -29,6 +29,16 @@ public class ProfileUtils {
 		return ris;
 	}
 	
+	public static Profile prepareProfileToRegister(ProfileDTO profileDTO) {
+		Profile ris = new Profile();
+		ris.setEmail(profileDTO.getEmail());
+		ris.setPassword(profileDTO.getPassword());
+		ris.setName(profileDTO.getName());
+		ris.setNickname(profileDTO.getNickname());
+		
+		return ris;
+	}
+	
 	public static Profile DTOProfileToProfileEntity(ProfileDTO profileDTO) {
 		Profile ris = new Profile(profileDTO.getName(), profileDTO.getNickname(), profileDTO.getBio(), profileDTO.getProPic(), profileDTO.getEmail());
 		
