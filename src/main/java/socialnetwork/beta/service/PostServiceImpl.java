@@ -60,7 +60,12 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	@Transactional
-	public boolean deletePostById(String idPost) {
+	public boolean deletePostById(String idProfile, String idPost) {
+		Post post = postRepo.findPostById(idPost);
+		if(!post.getProfile().getIdProfile().equals(idProfile)) {
+			return false;
+		}
+		
 		return postRepo.deletePostById(idPost);
 	}
 

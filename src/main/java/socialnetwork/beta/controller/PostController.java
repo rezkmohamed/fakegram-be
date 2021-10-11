@@ -80,8 +80,9 @@ public class PostController {
 	}
 	
 	@DeleteMapping("/{idPost}")
-	public ResponseEntity<HttpStatus> deletePostById(@PathVariable String idPost){
-		if(postService.deletePostById(idPost)) {
+	public ResponseEntity<HttpStatus> deletePostById(@PathVariable String idPost, HttpServletRequest request){
+		String idProfile = requestUtils.idProfileFromToken(request);
+		if(postService.deletePostById(idProfile, idPost)) {
 			return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 		}
 		

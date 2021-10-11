@@ -14,5 +14,5 @@ public interface PostService {
 	
 	public String savePost(PostDTO post);
 	
-	public boolean deletePostById(String idPost);
+	public boolean deletePostById(String idProfile, String idPost);
 }
