@@ -24,13 +24,10 @@ public class PostServiceImpl implements PostService {
 	@Override
 	@Transactional
 	public List<PostDTO> findAllPosts() {
-		List<PostDTO> posts = PostUtils.postToDTO(postRepo.findAllPosts());
+		List<Post> posts = postRepo.findAllPosts();
+		List<PostDTO> postsDTO = PostUtils.postToCompleteDTO(posts);
 		
-		posts.stream().forEach(p -> {
-			p.setProfile(ProfileUtils.profileToDTO(profileRepo.findProfile(p.getIdProfile())));
-		});
-		
-		return posts;
+		return postsDTO;
 	}
 
 	@Override
@@ -42,10 +39,10 @@ public class PostServiceImpl implements PostService {
 	@Override
 	@Transactional
 	public PostDTO findPostById(String idPost) {		
-		PostDTO post = PostUtils.postToDTO(postRepo.findPostById(idPost));
-		post.setProfile(ProfileUtils.profileToDTO(profileRepo.findProfile(post.getIdProfile())));
+		Post post = postRepo.findPostById(idPost);
+		PostDTO postDTO = PostUtils.postToCompleteDTO(post);
 		
-		return post;
+		return postDTO;
 	}
 
 	@Override

@@ -18,6 +18,26 @@ public class PostUtils {
 		return postDTO;
 	}
 	
+	public static PostDTO postToCompleteDTO(Post post) {
+		PostDTO postDTO = postToDTO(post);
+		postDTO.setLikesCounter(post.getLikes().size());
+		postDTO.setProfile(ProfileUtils.profileToDTO(post.getProfile()));
+		
+		return null;
+	}
+	
+	public static List<PostDTO> postToCompleteDTO(List<Post> posts){
+		List<PostDTO> ris = new ArrayList<>();
+		for(Post p : posts) {
+			PostDTO postDTO = postToDTO(p);
+			postDTO.setLikesCounter(p.getLikes().size());
+			postDTO.setProfile(ProfileUtils.profileToDTO(p.getProfile()));
+			ris.add(postDTO);
+		}
+		
+		return ris;
+	}
+	
 	public static List<PostDTO> postToDTO(List<Post> posts){
 		List<PostDTO> ris = new ArrayList<>();
 		for(Post p : posts) {

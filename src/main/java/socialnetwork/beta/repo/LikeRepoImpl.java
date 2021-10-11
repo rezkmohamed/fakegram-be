@@ -25,7 +25,7 @@ public class LikeRepoImpl implements LikeRepo {
 	public boolean deleteLike(String idProfile, String idPost) {
 		Session session = entityManager.unwrap(Session.class);
 		Query query = session.createQuery("delete from Like where id_profile_liker = :idProfile AND id_post = :idPost");
-		query.setParameter("id_profile_liker", idProfile);
+		query.setParameter("idProfile", idProfile);
 		query.setParameter("idPost", idPost);
 		if(query.executeUpdate() == 1) {
 			return true;

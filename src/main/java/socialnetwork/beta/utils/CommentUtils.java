@@ -11,6 +11,7 @@ public class CommentUtils {
 	
 	public static CommentDTO commentToCommentDTO(Comment comment) {
 		CommentDTO commentDTO = new CommentDTO();
+		commentDTO.setIdComment(comment.getIdComment());
 		commentDTO.setComment(comment.getComment());
 		commentDTO.setDate(comment.getDate());
 		commentDTO.setIdPost(comment.getPost().getIdPost());
