@@ -24,7 +24,7 @@ public class FollowController {
 	@Autowired
 	private RequestUtils requestUtils;
 	
-	@GetMapping("/{idProfileFollower}/checkfollow/{idProfileFollowed}")
+	@GetMapping("/checkfollow/{idProfileFollowed}")
 	public ResponseEntity<Boolean> getIsFollowing(@PathVariable String idProfileFollowed, HttpServletRequest request){
 		String idProfileFollower = requestUtils.idProfileFromToken(request);
 		if(followService.checkFollow(idProfileFollower, idProfileFollowed)) {

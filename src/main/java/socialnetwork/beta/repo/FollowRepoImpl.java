@@ -46,7 +46,6 @@ public class FollowRepoImpl implements FollowRepo {
 			Follow follow = query.getSingleResult();
 			return follow;
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		
 		return null;
