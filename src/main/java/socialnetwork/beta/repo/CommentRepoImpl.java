@@ -19,7 +19,7 @@ public class CommentRepoImpl implements CommentRepo {
 	@Override
 	public List<Comment> findAllCommentsForPost(String idPost) {
 		Session session = entityManager.unwrap(Session.class);
-		Query<Comment> query = session.createQuery("from Comment where id_post = :idPost");
+		Query<Comment> query = session.createQuery("from Comment where id_post = :idPost ORDER BY date DESC");
 		query.setParameter("idPost", idPost);
 		List<Comment> comments = query.getResultList();
 		
