@@ -68,6 +68,7 @@ public class ProfileServiceImpl implements ProfileService {
 			List<PostDTO> postsDTO = PostUtils.postToDTO(posts);
 			ProfileDTO profileDTO = ProfileUtils.profileToDTO(profile);
 			profileDTO.setPosts(postsDTO);
+			profileDTO.setPostsCounter(postsDTO.size());
 			profileDTO.setFollowersCounter(profile.getFollowers().size());
 			profileDTO.setFollowingCounter(profile.getFollowing().size());
 			return profileDTO;
@@ -113,8 +114,6 @@ public class ProfileServiceImpl implements ProfileService {
 		
 		return true;
 	}
-	
-	
 
 	@Override
 	@Transactional
