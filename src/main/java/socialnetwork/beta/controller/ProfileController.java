@@ -87,12 +87,6 @@ public class ProfileController {
 		return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 	}
 	
-	/**
-	 * TODO
-	 * @param profileDTO
-	 * @param request
-	 * @return
-	 */
 	@PutMapping("/updatebasics")
 	public ResponseEntity<Boolean> updateGeneralData(@RequestBody ProfileDTO profileDTO, HttpServletRequest request){
 		String idProfile = requestUtils.idProfileFromToken(request);
@@ -104,11 +98,15 @@ public class ProfileController {
 		return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
 	}
 	
-	@PutMapping("/newpass/{newPass}")
-	public ResponseEntity<Boolean> updatePassword(@RequestBody ProfileDTO profileDTO, @PathVariable String newPass, HttpServletRequest request){
+	@PutMapping("{oldPass}/newpass/{newPass}")
+	public ResponseEntity<Boolean> updatePassword(@RequestBody ProfileDTO profileDTO, @PathVariable String oldPass, @PathVariable String newPass, HttpServletRequest request){
+		String idProfile = requestUtils.idProfileFromToken(request);
+		profileDTO.setId(idProfile);
+		if(profileService.updatePassword(idProfile, oldPass, newPass)) {
+			return new ResponseEntity<>(true, HttpStatus.OK);
+		}
 		
-		
-		return null;
+		return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
 	}
 
 }

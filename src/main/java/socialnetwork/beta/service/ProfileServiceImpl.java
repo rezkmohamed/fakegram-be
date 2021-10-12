@@ -113,6 +113,8 @@ public class ProfileServiceImpl implements ProfileService {
 		
 		return true;
 	}
+	
+	
 
 	@Override
 	@Transactional
@@ -135,6 +137,19 @@ public class ProfileServiceImpl implements ProfileService {
 		}
 		
 		return ProfileUtils.ProfileToUserDTO(profile);
+	}
+
+	@Override
+	@Transactional
+	public boolean updatePassword(String idProfile, String oldPassword, String newPassword) {
+		Profile profile = profileRepo.findProfile(idProfile);
+		if(!profile.getPassword().equals(oldPassword)) {
+			return false;
+		}
+		profile.setPassword(newPassword);
+		profileRepo.updateProfile(profile);
+
+		return true;
 	}
 
 }
