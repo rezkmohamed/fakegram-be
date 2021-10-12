@@ -92,7 +92,23 @@ public class ProfileServiceImpl implements ProfileService {
 	@Override
 	@Transactional
 	public boolean updateProfile(ProfileDTO profileDTO) {
-		Profile profileToUpdate = ProfileUtils.prepareProfileToRegister(profileDTO);
+		Profile profileToUpdate = profileRepo.findProfile(profileDTO.getId());
+		if(profileToUpdate == null) {
+			return false;
+		}
+		if(profileDTO.getBio() != null) {
+			profileToUpdate.setBio(profileDTO.getBio());
+		}
+		if(profileDTO.getEmail() != null) {
+			profileToUpdate.setEmail(profileDTO.getEmail());
+		}
+		if(profileDTO.getName() != null) {
+			profileToUpdate.setName(profileDTO.getName());
+		}
+		if(profileDTO.getNickname() != null) {
+			profileToUpdate.setNickname(profileDTO.getNickname());
+		}
+		
 		profileRepo.updateProfile(profileToUpdate);
 		
 		return true;
