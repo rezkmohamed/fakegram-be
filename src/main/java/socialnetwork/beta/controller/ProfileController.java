@@ -34,6 +34,16 @@ public class ProfileController {
 		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 	}
 	
+	@GetMapping("/liked/{idPost}")
+	public ResponseEntity<List<ProfileDTO>> getProfilesLikedPost(@PathVariable String idPost){
+		List<ProfileDTO> profiles = profileService.findProfilesLikesPost(idPost);
+		if(profiles != null) {
+			return new ResponseEntity<>(profiles, HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+	}
+	
 	@GetMapping("/logged")
 	public ResponseEntity<ProfileDTO> getProfileLogged(HttpServletRequest request) {
 		String idProfile = requestUtils.idProfileFromToken(request);
@@ -53,5 +63,7 @@ public class ProfileController {
 		}
 		return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 	}
+	
+	
 
 }

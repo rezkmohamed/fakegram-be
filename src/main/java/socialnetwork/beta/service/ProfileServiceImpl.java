@@ -68,6 +68,8 @@ public class ProfileServiceImpl implements ProfileService {
 			List<PostDTO> postsDTO = PostUtils.postToDTO(posts);
 			ProfileDTO profileDTO = ProfileUtils.profileToDTO(profile);
 			profileDTO.setPosts(postsDTO);
+			profileDTO.setFollowersCounter(profile.getFollowers().size());
+			profileDTO.setFollowingCounter(profile.getFollowing().size());
 			return profileDTO;
 		}
 		
