@@ -99,9 +99,8 @@ public class ProfileController {
 	}
 	
 	@PutMapping("{oldPass}/newpass/{newPass}")
-	public ResponseEntity<Boolean> updatePassword(@RequestBody ProfileDTO profileDTO, @PathVariable String oldPass, @PathVariable String newPass, HttpServletRequest request){
+	public ResponseEntity<Boolean> updatePassword(@PathVariable String oldPass, @PathVariable String newPass, HttpServletRequest request){
 		String idProfile = requestUtils.idProfileFromToken(request);
-		profileDTO.setId(idProfile);
 		if(profileService.updatePassword(idProfile, oldPass, newPass)) {
 			return new ResponseEntity<>(true, HttpStatus.OK);
 		}
