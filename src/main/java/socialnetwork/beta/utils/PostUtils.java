@@ -23,7 +23,7 @@ public class PostUtils {
 		postDTO.setLikesCounter(post.getLikes().size());
 		postDTO.setProfile(ProfileUtils.profileToDTO(post.getProfile()));
 		
-		return null;
+		return postDTO;
 	}
 	
 	public static List<PostDTO> postToCompleteDTO(List<Post> posts){

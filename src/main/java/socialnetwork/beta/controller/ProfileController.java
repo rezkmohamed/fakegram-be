@@ -44,6 +44,34 @@ public class ProfileController {
 		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 	}
 	
+	/**
+	 * TODO:
+	 * TEST TWO METHODS SOTTO:
+	 * @param idProfile
+	 * @return
+	 */
+	
+	@GetMapping("/followers/{idProfile}")
+	public ResponseEntity<List<ProfileDTO>> getFollowersForProfile(@PathVariable String idProfile) {
+		List<ProfileDTO> profiles = profileService.findFollowersProfile(idProfile);
+		if(profiles != null) {
+			return new ResponseEntity<>(profiles, HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping("/following/{idProfile}")
+	public ResponseEntity<List<ProfileDTO>> getFollowingForProfile(@PathVariable String idProfile) {
+		List<ProfileDTO> profiles = profileService.findFollowingProfile(idProfile);
+		if(profiles != null) {
+			return new ResponseEntity<>(profiles, HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);		
+	}
+	
+	
 	@GetMapping("/logged")
 	public ResponseEntity<ProfileDTO> getProfileLogged(HttpServletRequest request) {
 		String idProfile = requestUtils.idProfileFromToken(request);
