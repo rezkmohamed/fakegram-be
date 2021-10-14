@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,5 +31,19 @@ public class MessageAndConversationController {
 		return new ResponseEntity<>(messageAndConversationService.getConversationsForProfile(idProfile), HttpStatus.OK);
 	}
 	
-	
+	@PostMapping("/new/{idSecondProfile}")
+	public ResponseEntity<ConversationDTO> createNewConversation(@PathVariable String idSecondProfile, HttpServletRequest request){
+		String idFirstProfile = requestUtils.idProfileFromToken(request);
+		ConversationDTO conversation = messageAndConversationService.getConversation(idFirstProfile, idSecondProfile);
+		if(conversation != null) {
+			return new ResponseEntity<>(conversation, HttpStatus.OK);
+		}
+		ConversationDTO newConversation = messageAndConversationService.createNewConversation(idFirstProfile, idSecondProfile);
+		
+		if(newConversation == null) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<>(newConversation, HttpStatus.OK);
+	}
 }

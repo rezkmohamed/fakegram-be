@@ -33,6 +33,7 @@ public class AuthFilter extends OncePerRequestFilter{
 		
 		if("/login".equalsIgnoreCase(request.getRequestURI()) ||
 		   "/register".equalsIgnoreCase(request.getRequestURI()) || 
+		   "/chat".equalsIgnoreCase(request.getRequestURI()) || 
 		   "/logged".equalsIgnoreCase(request.getRequestURI())){
 			filterChain.doFilter(request, response);
 			return;

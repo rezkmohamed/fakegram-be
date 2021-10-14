@@ -12,16 +12,11 @@ import org.springframework.web.socket.server.standard.ServletServerContainerFact
 
 import socialnetwork.beta.socket.handler.ChatWebSocketHandler;
 
-/**
- * FIXME
- * @author Mohamed.Rezk
- *
- */
 @Configuration
 @EnableWebSocket
 public class WebSocketConfiguration extends WebSocketTransportRegistration implements WebSocketConfigurer{
-	@Value("chatEndpoint")
-	private String CHAT_ENDPOINT;
+//	@Value("chatEndpoint")
+	private String CHAT_ENDPOINT = "/chat";
 	
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
