@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import socialnetwork.beta.dto.ConversationDTO;
+import socialnetwork.beta.dto.MessageDTO;
 import socialnetwork.beta.service.MessageAndConversationService;
 import socialnetwork.beta.utils.RequestUtils;
 
@@ -31,6 +32,14 @@ public class MessageAndConversationController {
 		return new ResponseEntity<>(messageAndConversationService.getConversationsForProfile(idProfile), HttpStatus.OK);
 	}
 	
+	@GetMapping("/{idConversation}/messages")
+	public ResponseEntity<List<MessageDTO>> getMessagesForConversation(@PathVariable String idConversation, HttpServletRequest request){
+		String idProfile = requestUtils.idProfileFromToken(request);
+		List<MessageDTO> messages = messageAndConversationService.getMessagesOfChat(idConversation, idProfile);
+		return new ResponseEntity<>(messages, HttpStatus.OK);
+		
+	}
+	
 	@PostMapping("/new/{idSecondProfile}")
 	public ResponseEntity<ConversationDTO> createNewConversation(@PathVariable String idSecondProfile, HttpServletRequest request){
 		String idFirstProfile = requestUtils.idProfileFromToken(request);
@@ -46,4 +55,7 @@ public class MessageAndConversationController {
 		
 		return new ResponseEntity<>(newConversation, HttpStatus.OK);
 	}
+	
+	
+	
 }
