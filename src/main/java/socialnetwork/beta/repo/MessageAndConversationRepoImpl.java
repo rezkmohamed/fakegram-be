@@ -30,7 +30,7 @@ public class MessageAndConversationRepoImpl implements MessageAndConversationRep
 	public List<Message> getMessagesOfChat(String idConversation) {
 		Session session = entityManager.unwrap(Session.class);
 		Query<Message> query = session
-				.createQuery("from Message where id_conversation = :idConversation ORDERED BY date_message ASC",
+				.createQuery("from Message where id_conversation = :idConversation ORDER BY date_message DESC",
 						Message.class);
 		query.setParameter("idConversation", idConversation);
 		List<Message> messages = query.getResultList();

@@ -98,6 +98,16 @@ public class ProfileController {
 		return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
 	}
 	
+	@PutMapping("/newpropic/{newImg}")
+	public ResponseEntity<Boolean> updateProfilePic(@PathVariable String newImg, HttpServletRequest request){
+		String idProfile = requestUtils.idProfileFromToken(request);
+		if(profileService.updateProfilePic(idProfile, newImg)) {
+			return new ResponseEntity<>(true, HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+	}
+	
 	@PutMapping("{oldPass}/newpass/{newPass}")
 	public ResponseEntity<Boolean> updatePassword(@PathVariable String oldPass, @PathVariable String newPass, HttpServletRequest request){
 		String idProfile = requestUtils.idProfileFromToken(request);

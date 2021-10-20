@@ -23,7 +23,7 @@ public interface ProfileService {
 	
 	public boolean saveProfile(ProfileDTO profile);
 	
-	public boolean uploadProfilePic(MultipartFile file, ProfileDTO profile);
+	public boolean updateProfilePic(String idProfile, String newImg);
 	
 	public boolean updateProfile(ProfileDTO profileDTO);
 	

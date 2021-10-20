@@ -117,18 +117,6 @@ public class ProfileServiceImpl implements ProfileService {
 
 	@Override
 	@Transactional
-	public boolean uploadProfilePic(MultipartFile file, ProfileDTO profile) {
-		
-		
-		
-		
-		
-		
-		return false;
-	}
-
-	@Override
-	@Transactional
 	public UserDTO getProfileByEmailAndPassword(String email, String password) {
 		Profile profile = profileRepo.findProfileByEmailAndPassword(email, password);
 		if(profile == null) {
@@ -148,6 +136,15 @@ public class ProfileServiceImpl implements ProfileService {
 		profile.setPassword(newPassword);
 		profileRepo.updateProfile(profile);
 
+		return true;
+	}
+
+	@Override
+	public boolean updateProfilePic(String idProfile, String newImg) {
+		Profile profile = profileRepo.findProfile(idProfile);
+		profile.setProPic(newImg);
+		profileRepo.updateProfile(profile);
+		
 		return true;
 	}
 

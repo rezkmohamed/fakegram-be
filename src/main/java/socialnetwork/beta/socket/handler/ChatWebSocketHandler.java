@@ -42,13 +42,11 @@ public class ChatWebSocketHandler extends TextWebSocketHandler{
 					return;
 				}
 			}
-			
 		}
 		else {
 			String msg = message.getPayload();
 			String idProfileSession = null;
 			for(Map.Entry<String, WebSocketSession> entry : webSocketSessionsMap.entrySet()) {
-				
 				if(entry.getValue().equals(session)) {
 					idProfileSession = entry.getKey();
 					ObjectMapper om = new ObjectMapper(); 

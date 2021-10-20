@@ -29,6 +29,7 @@ public class MessageAndConversationController {
 	@GetMapping("")
 	public ResponseEntity<List<ConversationDTO>> getConversationsForProfile(HttpServletRequest request){
 		String idProfile = requestUtils.idProfileFromToken(request);
+		
 		return new ResponseEntity<>(messageAndConversationService.getConversationsForProfile(idProfile), HttpStatus.OK);
 	}
 	
@@ -36,8 +37,8 @@ public class MessageAndConversationController {
 	public ResponseEntity<List<MessageDTO>> getMessagesForConversation(@PathVariable String idConversation, HttpServletRequest request){
 		String idProfile = requestUtils.idProfileFromToken(request);
 		List<MessageDTO> messages = messageAndConversationService.getMessagesOfChat(idConversation, idProfile);
-		return new ResponseEntity<>(messages, HttpStatus.OK);
 		
+		return new ResponseEntity<>(messages, HttpStatus.OK);
 	}
 	
 	@PostMapping("/new/{idSecondProfile}")
