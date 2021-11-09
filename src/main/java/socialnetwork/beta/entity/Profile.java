@@ -89,6 +89,17 @@ public class Profile {
 			   fetch=FetchType.LAZY)
 	private List<Notification> notificationsRecived;
 	
+	@OneToMany(mappedBy="profileSender",
+			   cascade=CascadeType.ALL,
+			   fetch=FetchType.LAZY)
+	private List<Question> questionsSented;
+	
+	@OneToMany(mappedBy="profileReciver",
+			   cascade=CascadeType.ALL,
+			   fetch=FetchType.LAZY)
+	private List<Question> questionsRecived;
+	
+	
 	public Profile() {}
 	
 	public Profile(String name, String nickname, String bio, String proPic, String email, String password) {
@@ -301,5 +312,26 @@ public class Profile {
 	public void setNotificationsRecived(List<Notification> notificationsRecived) {
 		this.notificationsRecived = notificationsRecived;
 	}
+	
+	public List<Question> getQuestionsSented() {
+		return questionsSented;
+	}
 
+	public void setQuestionsSented(List<Question> questionsSented) {
+		this.questionsSented = questionsSented;
+	}
+
+	public List<Question> getQuestionsRecived() {
+		return questionsRecived;
+	}
+
+	public void setQuestionsRecived(List<Question> questionsRecived) {
+		this.questionsRecived = questionsRecived;
+	}
+
+	@Override
+	public String toString() {
+		return "Profile [idProfile=" + idProfile + ", name=" + name + ", nickname=" + nickname + ", bio=" + bio
+				+ ", proPic=" + proPic + ", email=" + email + ", password=" + password + "]";
+	}
 }

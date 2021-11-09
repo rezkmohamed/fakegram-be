@@ -140,6 +140,7 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 
 	@Override
+	@Transactional
 	public boolean updateProfilePic(String idProfile, String newImg) {
 		Profile profile = profileRepo.findProfile(idProfile);
 		profile.setProPic(newImg);

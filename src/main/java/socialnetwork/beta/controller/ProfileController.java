@@ -98,10 +98,10 @@ public class ProfileController {
 		return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
 	}
 	
-	@PutMapping("/newpropic/{newImg}")
-	public ResponseEntity<Boolean> updateProfilePic(@PathVariable String newImg, HttpServletRequest request){
+	@PutMapping("/newpropic")
+	public ResponseEntity<Boolean> updateProfilePic(@RequestBody ProfileDTO profileDTO, HttpServletRequest request){
 		String idProfile = requestUtils.idProfileFromToken(request);
-		if(profileService.updateProfilePic(idProfile, newImg)) {
+		if(profileService.updateProfilePic(idProfile, profileDTO.getProPic())) {
 			return new ResponseEntity<>(true, HttpStatus.OK);
 		}
 		
