@@ -113,4 +113,11 @@ public class Question {
 	public void setProfileReciver(Profile profileReciver) {
 		this.profileReciver = profileReciver;
 	}
+
+	@Override
+	public String toString() {
+		return "Question [idQuestion=" + idQuestion + ", isAnswered=" + isAnswered + ", isAnonym=" + isAnonym
+				+ ", answer=" + answer + ", date=" + date + ", profileSender=" + profileSender + ", profileReciver="
+				+ profileReciver + "]";
+	}
 }
