@@ -47,5 +47,4 @@ public class QuestionServiceImpl implements QuestionService {
 		
 		return questionRepo.addNewQuestion(question);
 	}
-
 }
