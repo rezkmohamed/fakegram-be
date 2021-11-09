@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import socialnetwork.beta.dto.QuestionDTO;
+import socialnetwork.beta.entity.Profile;
 import socialnetwork.beta.entity.Question;
+import socialnetwork.beta.repo.ProfileRepo;
 import socialnetwork.beta.repo.QuestionRepo;
 import socialnetwork.beta.utils.QuestionUtils;
 
@@ -15,6 +17,8 @@ import socialnetwork.beta.utils.QuestionUtils;
 public class QuestionServiceImpl implements QuestionService {
 	@Autowired
 	private QuestionRepo questionRepo;
+	@Autowired
+	private ProfileRepo profileRepo;
 
 	@Override
 	@Transactional
@@ -37,7 +41,9 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	@Transactional
 	public String addNewQuestion(QuestionDTO questionDTO) {
-		Question question = QuestionUtils.questionEntityFromDTO(questionDTO);
+		Profile profileSender = profileRepo.findProfile(questionDTO.getIdProfileSender());
+		Profile profileReciver = profileRepo.findProfile(questionDTO.getIdProfileReciver());
+		Question question = QuestionUtils.questionEntityFromDTO(questionDTO, profileSender, profileReciver);
 		
 		return questionRepo.addNewQuestion(question);
 	}
