@@ -6,6 +6,7 @@ public class QuestionDTO {
 	private String idQuestion;
 	private boolean isAnswered;
 	private boolean isAnonym;
+	private String question;
 	private String answer;
 	private Date date;
 	private String idProfileSender;
@@ -13,14 +14,16 @@ public class QuestionDTO {
 	private ProfileDTO profileSender;
 	private ProfileDTO profileReciver;
 	
-	public QuestionDTO() {}
+	public QuestionDTO() {}	
 
-	public QuestionDTO(String idQuestion, boolean isAnswered, boolean isAnonym, String answer, Date date,
-			String idProfileSender, String idProfileReciver, ProfileDTO profileSender, ProfileDTO profileReciver) {
+	public QuestionDTO(String idQuestion, boolean isAnswered, boolean isAnonym, String question, String answer,
+			Date date, String idProfileSender, String idProfileReciver, ProfileDTO profileSender,
+			ProfileDTO profileReciver) {
 		super();
 		this.idQuestion = idQuestion;
 		this.isAnswered = isAnswered;
 		this.isAnonym = isAnonym;
+		this.question = question;
 		this.answer = answer;
 		this.date = date;
 		this.idProfileSender = idProfileSender;
@@ -37,19 +40,19 @@ public class QuestionDTO {
 		this.idQuestion = idQuestion;
 	}
 
-	public boolean isAnswered() {
+	public boolean getIsAnswered() {
 		return isAnswered;
 	}
 
-	public void setAnswered(boolean isAnswered) {
+	public void setIsAnswered(boolean isAnswered) {
 		this.isAnswered = isAnswered;
 	}
 
-	public boolean isAnonym() {
+	public boolean getIsAnonym() {
 		return isAnonym;
 	}
 
-	public void setAnonym(boolean isAnonym) {
+	public void setIsAnonym(boolean isAnonym) {
 		this.isAnonym = isAnonym;
 	}
 
@@ -101,11 +104,19 @@ public class QuestionDTO {
 		this.profileReciver = profileReciver;
 	}
 
+	public String getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(String question) {
+		this.question = question;
+	}
+
 	@Override
 	public String toString() {
 		return "QuestionDTO [idQuestion=" + idQuestion + ", isAnswered=" + isAnswered + ", isAnonym=" + isAnonym
-				+ ", answer=" + answer + ", date=" + date + ", idProfileSender=" + idProfileSender
-				+ ", idProfileReciver=" + idProfileReciver + ", profileSender=" + profileSender + ", profileReciver="
-				+ profileReciver + "]";
+				+ ", question=" + question + ", answer=" + answer + ", date=" + date + ", idProfileSender="
+				+ idProfileSender + ", idProfileReciver=" + idProfileReciver + ", profileSender=" + profileSender
+				+ ", profileReciver=" + profileReciver + "]";
 	}
 }
