@@ -37,6 +37,22 @@ public class QuestionServiceImpl implements QuestionService {
 		
 		return questionsDTO;
 	}
+	
+	@Override
+	@Transactional
+	public QuestionDTO findPendingQuestion(String idQuestion, String idProfileLogged) {
+		Question question = questionRepo.findPendingQuestion(idQuestion);
+		if(question != null) {
+			if(!question.getProfileReciver().getIdProfile().equals(idProfileLogged)) {
+				return null;
+			}
+			
+			return QuestionUtils.questionDTOFromEntity(question);
+		}
+		
+		return null;
+	}
+
 
 	@Override
 	@Transactional
