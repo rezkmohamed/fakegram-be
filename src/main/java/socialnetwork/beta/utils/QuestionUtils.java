@@ -10,16 +10,17 @@ import socialnetwork.beta.entity.Question;
 public class QuestionUtils {
 	public static QuestionDTO questionDTOFromEntity(Question question) {
 		QuestionDTO questionDTO = new QuestionDTO();
+		questionDTO.setQuestion(question.getQuestion());
 		questionDTO.setDate(question.getDate());
-		questionDTO.setAnonym(question.isAnonym());
-		questionDTO.setAnswered(question.isAnswered());
+		questionDTO.setIsAnonym(question.isAnonym());
+		questionDTO.setIsAnswered(question.isAnswered());
 		questionDTO.setProfileReciver(ProfileUtils.profileToDTO(question.getProfileReciver()));
 		questionDTO.setIdProfileReciver(question.getProfileReciver().getIdProfile());
-		if(!questionDTO.isAnonym()) {
+		if(!questionDTO.getIsAnonym()) {
 			questionDTO.setProfileSender(ProfileUtils.profileToDTO(question.getProfileSender()));
 			questionDTO.setIdProfileSender(question.getProfileSender().getIdProfile());
 		}
-		if(questionDTO.isAnswered()) {
+		if(questionDTO.getIsAnswered()) {
 			questionDTO.setAnswer(question.getAnswer());
 		}
 		
@@ -37,9 +38,10 @@ public class QuestionUtils {
 	
 	public static Question questionEntityFromDTO(QuestionDTO questionDTO, Profile profileSender, Profile profileReciver) {
 		Question question = new Question();
+		question.setQuestion(questionDTO.getQuestion());
 		question.setIdQuestion(questionDTO.getIdQuestion());
-		question.setAnonym(questionDTO.isAnonym());
-		question.setAnswered(questionDTO.isAnswered());
+		question.setAnonym(questionDTO.getIsAnonym());
+		question.setAnswered(questionDTO.getIsAnswered());
 		if(question.isAnswered()) {
 			question.setAnswer(questionDTO.getAnswer());
 		}
