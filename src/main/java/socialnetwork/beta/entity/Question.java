@@ -19,7 +19,7 @@ public class Question {
 	@Id
 	@GeneratedValue(generator = "uuid")
 	@GenericGenerator(name = "uuid", strategy = "uuid2")
-	@Column(name="id_post")
+	@Column(name="id_question")
 	private String idQuestion;
 	
 	@Column(name="answered")
@@ -28,9 +28,12 @@ public class Question {
 	@Column(name="isanonym")
 	private boolean isAnonym;
 	
+	@Column(name="question")
+	private String question;
+	
 	@Column(name="answer")
 	private String answer;
-	
+		
 	@Column(name="date")
 	private Date date;
 	
@@ -46,12 +49,13 @@ public class Question {
 	
 	public Question() {}
 	
-	public Question(String idQuestion, boolean isAnswered, boolean isAnonym, String answer, Date date,
+	public Question(String idQuestion, boolean isAnswered, boolean isAnonym, String question, String answer, Date date,
 			Profile profileSender, Profile profileReciver) {
 		super();
 		this.idQuestion = idQuestion;
 		this.isAnswered = isAnswered;
 		this.isAnonym = isAnonym;
+		this.question = question;
 		this.answer = answer;
 		this.date = date;
 		this.profileSender = profileSender;
@@ -113,6 +117,14 @@ public class Question {
 	public void setProfileReciver(Profile profileReciver) {
 		this.profileReciver = profileReciver;
 	}
+	
+	public String getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(String question) {
+		this.question = question;
+	}	
 
 	@Override
 	public String toString() {
