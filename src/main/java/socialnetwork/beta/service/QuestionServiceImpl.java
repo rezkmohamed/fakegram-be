@@ -53,7 +53,6 @@ public class QuestionServiceImpl implements QuestionService {
 		return null;
 	}
 
-
 	@Override
 	@Transactional
 	public String addNewQuestion(QuestionDTO questionDTO) {

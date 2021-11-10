@@ -48,6 +48,17 @@ public class QuestionController {
 		return new ResponseEntity<>(questionsDTO, HttpStatus.NO_CONTENT);
 	}
 	
+	@GetMapping("/pending/{idQuestion}")
+	public ResponseEntity<QuestionDTO> getPendingQuestion(@PathVariable String idQuestion, HttpServletRequest request){
+		String idProfile = requestUtils.idProfileFromToken(request);
+		QuestionDTO questionDTO = questionService.findPendingQuestion(idQuestion, idProfile);
+		if(questionDTO != null) {
+			return new ResponseEntity<>(questionDTO, HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+	}
+	
 	@PostMapping("/new")
 	public ResponseEntity<Boolean> addNewQuestion(@RequestBody QuestionDTO questionDTO, HttpServletRequest request) {
 		String idProfile = requestUtils.idProfileFromToken(request);
