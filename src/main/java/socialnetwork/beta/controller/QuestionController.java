@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,6 +58,17 @@ public class QuestionController {
 		}
 		
 		return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+	}
+	
+	@PutMapping("/{idQuestion}/update/{answer}")
+	public ResponseEntity<Boolean> updateQuestion(@PathVariable String idQuestion, @PathVariable String answer, HttpServletRequest request){
+		String idProfile = requestUtils.idProfileFromToken(request);
+		int resultQuery = questionService.updateQuestion(idQuestion, idProfile, answer);
+		if(resultQuery <= 0) {
+			return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 	
 }

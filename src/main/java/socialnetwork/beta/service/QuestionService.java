@@ -10,4 +10,6 @@ public interface QuestionService {
 	public List<QuestionDTO> findPendingQuestionsForProfile(String idProfile);
 	
 	public String addNewQuestion(QuestionDTO questionDTO);
+	
+	public int updateQuestion(String idQuestion, String idProfileLogged,String answer);
 }

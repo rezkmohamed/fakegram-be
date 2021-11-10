@@ -47,4 +47,15 @@ public class QuestionServiceImpl implements QuestionService {
 		
 		return questionRepo.addNewQuestion(question);
 	}
+
+	@Override
+	@Transactional
+	public int updateQuestion(String idQuestion, String idProfileLogged,String answer) {
+		Profile profileLogged = profileRepo.findProfile(idProfileLogged);
+		if(!profileLogged.getIdProfile().equals(idProfileLogged)) {
+			return -1;
+		}
+		
+		return questionRepo.updateQuestion(idQuestion, answer);
+	}
 }
