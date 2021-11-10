@@ -19,7 +19,7 @@ public class QuestionRepoImpl implements QuestionRepo {
 	@Override
 	public List<Question> findQuestionsForProfile(String idProfile) {
 		Session session = entityManager.unwrap(Session.class);
-		Query<Question> query = session.createQuery("from Question where id_profile_responder = :idProfile");
+		Query<Question> query = session.createQuery("from Question where id_profile_responder = :idProfile AND answered = 1");
 		query.setParameter("idProfile", idProfile);
 		List<Question> questions = query.getResultList();
 		
