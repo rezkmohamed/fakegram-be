@@ -10,6 +10,7 @@ import socialnetwork.beta.entity.Question;
 public class QuestionUtils {
 	public static QuestionDTO questionDTOFromEntity(Question question) {
 		QuestionDTO questionDTO = new QuestionDTO();
+		questionDTO.setIdQuestion(question.getIdQuestion());
 		questionDTO.setQuestion(question.getQuestion());
 		questionDTO.setDate(question.getDate());
 		questionDTO.setIsAnonym(question.isAnonym());
