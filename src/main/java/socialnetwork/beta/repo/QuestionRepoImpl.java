@@ -44,4 +44,14 @@ public class QuestionRepoImpl implements QuestionRepo {
 		return (String)session.save(question);
 	}
 
+	@Override
+	public int updateQuestion(String idQuestion, String answer) {
+		Session session = entityManager.unwrap(Session.class);
+		Query query = session.createQuery("update Question set answer = :newAnswer, answered = 1 WHERE id_question = :idQuestion");
+		query.setParameter("newAnswer", answer);
+		query.setParameter("idQuestion", idQuestion);
+		
+		return query.executeUpdate();
+	}
+
 }

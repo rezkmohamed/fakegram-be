@@ -10,4 +10,6 @@ public interface QuestionRepo {
 	public List<Question> findPendingQuestionsForProfile(String idProfile);
 	
 	public String addNewQuestion(Question question);
+	
+	public int updateQuestion(String idQuestion, String answer);
 }
