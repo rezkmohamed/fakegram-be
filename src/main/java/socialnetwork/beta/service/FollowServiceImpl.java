@@ -8,8 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import socialnetwork.beta.entity.Follow;
 import socialnetwork.beta.entity.Profile;
 import socialnetwork.beta.repo.FollowRepo;
+import socialnetwork.beta.repo.NotificationRepo;
 import socialnetwork.beta.repo.ProfileRepo;
 import socialnetwork.beta.utils.FollowUtils;
+import socialnetwork.beta.utils.NotificationUtils;
 
 @Service
 public class FollowServiceImpl implements FollowService {
@@ -17,6 +19,8 @@ public class FollowServiceImpl implements FollowService {
 	private FollowRepo followRepo;
 	@Autowired
 	private ProfileRepo profileRepo;
+	@Autowired
+	private NotificationRepo notificationRepo;
 	
 	@Override
 	@Transactional
@@ -24,6 +28,7 @@ public class FollowServiceImpl implements FollowService {
 		Profile profileFollower = profileRepo.findProfile(idProfileFollower);
 		Profile profileFollowing = profileRepo.findProfile(idProfileFollowed);
 		Follow followToAdd = FollowUtils.createNewFollowFromProfiles(profileFollower, profileFollowing);
+		notificationRepo.addNewNotification(NotificationUtils.newNotificationEntityFromFollow(followToAdd));
 		
 		return followRepo.addFollow(followToAdd);
 	}

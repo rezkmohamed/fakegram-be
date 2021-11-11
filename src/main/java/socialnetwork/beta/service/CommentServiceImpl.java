@@ -24,7 +24,7 @@ public class CommentServiceImpl implements CommentService {
 	private ProfileRepo profileRepo;
 	@Autowired
 	private PostRepo postRepo;
-
+	
 	@Override
 	@Transactional
 	public List<CommentDTO> findAllCommentsForPost(String idPost) {
