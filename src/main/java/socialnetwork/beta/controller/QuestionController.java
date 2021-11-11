@@ -82,4 +82,14 @@ public class QuestionController {
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 	
+	@PutMapping("/{idQuestion}/settopending")
+	public ResponseEntity<Boolean> setQuestionToPending(@PathVariable String idQuestion, HttpServletRequest request){
+		String idProfile = requestUtils.idProfileFromToken(request);
+		int resultQuery = questionService.setQuestionToPending(idQuestion, idProfile);
+		if(resultQuery <= 0) {
+			return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<>(true, HttpStatus.OK);
+	}
 }
