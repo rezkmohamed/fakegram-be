@@ -4,6 +4,7 @@ public enum NotificationTypeDTO {
 	LIKE ,
 	COMMENT,
 	COMMENT_LIKE,
-	FOLLOW;
+	FOLLOW,
+	QUESTION;
 }
 
