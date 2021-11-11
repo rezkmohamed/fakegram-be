@@ -19,7 +19,7 @@ public class QuestionRepoImpl implements QuestionRepo {
 	@Override
 	public List<Question> findQuestionsForProfile(String idProfile) {
 		Session session = entityManager.unwrap(Session.class);
-		Query<Question> query = session.createQuery("from Question where id_profile_responder = :idProfile AND answered = 1");
+		Query<Question> query = session.createQuery("from Question where id_profile_responder = :idProfile AND answered = 1 ORDER BY date DESC");
 		query.setParameter("idProfile", idProfile);
 		List<Question> questions = query.getResultList();
 		
@@ -29,7 +29,7 @@ public class QuestionRepoImpl implements QuestionRepo {
 	@Override
 	public List<Question> findPendingQuestionsForProfile(String idProfile) {
 		Session session = entityManager.unwrap(Session.class);
-		Query<Question> query = session.createQuery("from Question where id_profile_responder = :idProfile AND answered = 0");
+		Query<Question> query = session.createQuery("from Question where id_profile_responder = :idProfile AND answered = 0 ORDER BY date DESC");
 		query.setParameter("idProfile", idProfile);
 		List<Question> questions = query.getResultList();
 		
