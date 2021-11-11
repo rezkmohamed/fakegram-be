@@ -9,7 +9,7 @@ public interface NotificationService {
 	
 	public int deleteFollowNotification(String idProfileNotificator, String idProfileToNotify);
 	
-	public NotificationDTO addNotification(NotificationDTO notification);
+	public String addNotification(NotificationDTO notification);
 	
-	public boolean setNotificationsAsSeenForProfile(String idProfile);
+	public void setNotificationsAsSeenForProfile(String idProfile);
 }

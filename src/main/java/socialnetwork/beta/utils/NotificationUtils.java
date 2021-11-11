@@ -15,7 +15,7 @@ public class NotificationUtils {
 		return null;
 	}
 	
-	public List<NotificationDTO> notificationEntityToDTO(List<Notification> notifications){
+	public static List<NotificationDTO> notificationEntityToDTO(List<Notification> notifications){
 		List<NotificationDTO> notificationsDTO = new ArrayList<>();
 		for(Notification n : notifications) {
 			notificationsDTO.add(notificationEntityToDTO(n));
