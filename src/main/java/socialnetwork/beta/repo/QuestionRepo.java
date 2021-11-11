@@ -15,4 +15,5 @@ public interface QuestionRepo {
 	
 	public int updateQuestion(String idQuestion, String answer);
 	
+	public int setQuestionToPending(String idQuestion);
 }

@@ -67,4 +67,13 @@ public class QuestionRepoImpl implements QuestionRepo {
 		
 		return query.executeUpdate();
 	}
+
+	@Override
+	public int setQuestionToPending(String idQuestion) {
+		Session session = entityManager.unwrap(Session.class);
+		Query query = session.createQuery("update Question set answer = '', answered = 0 WHERE id_question = :idQuestion");
+		query.setParameter("idQuestion", idQuestion);
+		
+		return query.executeUpdate();
+	}
 }
