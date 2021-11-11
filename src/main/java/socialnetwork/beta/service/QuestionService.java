@@ -14,4 +14,6 @@ public interface QuestionService {
 	public String addNewQuestion(QuestionDTO questionDTO);
 	
 	public int updateQuestion(String idQuestion, String idProfileLogged,String answer);
+	
+	public int setQuestionToPending(String idQuestion, String idProfileLogged);
 }

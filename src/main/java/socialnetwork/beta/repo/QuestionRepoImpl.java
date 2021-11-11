@@ -50,6 +50,21 @@ public class QuestionRepoImpl implements QuestionRepo {
 		
 		return null;
 	}
+	
+	@Override
+	public Question findQuestionById(String idQuestion) {
+		Session session = entityManager.unwrap(Session.class);
+		Query<Question> query = session.createQuery("from Question where id_question = :idQuestion");
+		query.setParameter("idQuestion", idQuestion);
+		try {
+			Question question = query.getSingleResult();
+			return question;
+		} catch (Exception e) {
+			// TODO: nothing to do
+		}
+
+		return null;
+	}
 
 	@Override
 	public String addNewQuestion(Question question) {

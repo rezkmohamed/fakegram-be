@@ -11,6 +11,8 @@ public interface QuestionRepo {
 	
 	public Question findPendingQuestion(String idQuestion);
 	
+	public Question findQuestionById(String idQuestion);
+	
 	public String addNewQuestion(Question question);
 	
 	public int updateQuestion(String idQuestion, String answer);
