@@ -77,24 +77,12 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	@Transactional
 	public int setQuestionToPending(String idQuestion, String idProfileLogged) {
-		Profile profileLogged = profileRepo.findProfile(idProfileLogged);
-		/**
-		 * 
-		 * 
-		 * TODO
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * TODO
-		 */
+		Question question = questionRepo.findQuestionById(idQuestion);
+		if(!question.getProfileReciver().getIdProfile().equals(idProfileLogged) ||
+			!question.isAnswered()) {
+			return -1;
+		}
 		
-		return 0;
+		return questionRepo.setQuestionToPending(idQuestion);
 	}
 }
