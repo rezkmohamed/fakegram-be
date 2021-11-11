@@ -21,11 +21,21 @@ public class NotificationUtils {
 	
 	
 	public static NotificationDTO notificationEntityToDTO(Notification notification) {
-		/**
-		 * TODO
-		 */
+		NotificationDTO notificationDTO = new NotificationDTO();
+		notificationDTO.setProfileNotificator(ProfileUtils.profileToDTO(notification.getProfileNotificator()));
+		notificationDTO.setProfileToNotify(ProfileUtils.profileToDTO(notification.getProfileToNotify()));
+		notificationDTO.setDate(notification.getDate());
+		notificationDTO.setIsSeen(notification.isSeen());
+		notificationDTO.setImgProfileNotificator(notification.getProfileNotificator().getProPic());
+		notificationDTO.setNotificationType(notification.getNotificationType());
+		if(notificationDTO.getNotificationType() == NotificationTypeDTO.COMMENT) {
+			notificationDTO.setCommentMessage(notification.getComment());
+		} else if (notificationDTO.getNotificationType() == NotificationTypeDTO.COMMENT) {
+			notificationDTO.setPost(PostUtils.postToDTO(notification.getPost()));
+		}
 		
-		return null;
+		
+		return notificationDTO;
 	}
 	
 	public static List<NotificationDTO> notificationEntityToDTO(List<Notification> notifications){
