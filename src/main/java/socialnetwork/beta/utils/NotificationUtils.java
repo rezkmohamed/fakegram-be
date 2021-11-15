@@ -30,10 +30,10 @@ public class NotificationUtils {
 		notificationDTO.setNotificationType(notification.getNotificationType());
 		if(notificationDTO.getNotificationType() == NotificationTypeDTO.COMMENT) {
 			notificationDTO.setCommentMessage(notification.getComment());
-		} else if (notificationDTO.getNotificationType() == NotificationTypeDTO.COMMENT) {
+			notificationDTO.setPost(PostUtils.postToDTO(notification.getPost()));
+		} else if (notificationDTO.getNotificationType() == NotificationTypeDTO.LIKE) {
 			notificationDTO.setPost(PostUtils.postToDTO(notification.getPost()));
 		}
-		
 		
 		return notificationDTO;
 	}
@@ -48,10 +48,17 @@ public class NotificationUtils {
 	}
 	
 	public static Notification notificationDTOToEntity(NotificationDTO notificationDTO) {
-		/**
-		 * TODO
-		 */
+		Notification notification = new Notification();
+		notification.setProfileNotificator(ProfileUtils.DTOProfileToProfileEntity(notificationDTO.getProfileNotificator()));
+		notification.setProfileToNotify(ProfileUtils.DTOProfileToProfileEntity(notificationDTO.getProfileToNotify()));
+		notification.setNotificationType(notificationDTO.getNotificationType());
+		if(notification.getNotificationType() == NotificationTypeDTO.COMMENT) {
+			notification.setComment(notificationDTO.getCommentMessage());
+			notification.setPost(PostUtils.DTOPostToPostEntity(notificationDTO.getPost()));
+		} else if(notification.getNotificationType() == NotificationTypeDTO.LIKE) {
+			notification.setPost(PostUtils.DTOPostToPostEntity(notificationDTO.getPost()));
+		}
 		
-		return null;
+		return notification;
 	}
 }
