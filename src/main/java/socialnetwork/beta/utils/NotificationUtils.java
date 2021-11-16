@@ -45,11 +45,12 @@ public class NotificationUtils {
 	}
 	
 	public static Notification newNotificationEntityFromQuestion(Question question) {
-		/**
-		 * TODO
-		 */
+		Notification notification = new Notification();
+		notification.setNotificationType(NotificationTypeDTO.QUESTION);
+		notification.setProfileToNotify(question.getProfileReciver());
+		notification.setSeen(false);
 		
-		return null;
+		return notification;
 	}
 	
 	public static NotificationDTO notificationEntityToDTO(Notification notification) {
