@@ -1,7 +1,7 @@
 package socialnetwork.beta.dto;
 
 public enum NotificationTypeDTO {
-	LIKE ,
+	LIKE,
 	COMMENT,
 	COMMENT_LIKE,
 	FOLLOW,

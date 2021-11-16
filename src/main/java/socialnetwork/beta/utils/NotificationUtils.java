@@ -28,7 +28,7 @@ public class NotificationUtils {
 		notification.setSeen(false);
 		notification.setPost(like.getPost());
 		
-		return null;
+		return notification;
 	}
 	
 	

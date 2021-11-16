@@ -59,7 +59,4 @@ public class LikeServiceImpl implements LikeService {
 		
 		return false;
 	}
-	
-	
-
 }
