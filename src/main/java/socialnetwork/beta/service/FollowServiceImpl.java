@@ -36,7 +36,12 @@ public class FollowServiceImpl implements FollowService {
 	@Override
 	@Transactional
 	public boolean deleteFollow(String idProfileFollower, String idProfileFollowed) {
-		return followRepo.deleteFollow(idProfileFollower, idProfileFollowed);
+		boolean isUnfollowed = followRepo.deleteFollow(idProfileFollower, idProfileFollowed);
+		if(isUnfollowed) {
+			notificationRepo.deleteFollowNotification(idProfileFollower, idProfileFollowed);
+		}
+		
+		return isUnfollowed;
 	}
 
 	@Override
