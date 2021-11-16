@@ -9,6 +9,7 @@ import socialnetwork.beta.entity.Comment;
 import socialnetwork.beta.entity.Follow;
 import socialnetwork.beta.entity.Like;
 import socialnetwork.beta.entity.Notification;
+import socialnetwork.beta.entity.Question;
 
 public class NotificationUtils {
 	public static Notification newNotificationEntityFromFollow(Follow follow) {
@@ -43,6 +44,13 @@ public class NotificationUtils {
 		return notification;
 	}
 	
+	public static Notification newNotificationEntityFromQuestion(Question question) {
+		/**
+		 * TODO
+		 */
+		
+		return null;
+	}
 	
 	public static NotificationDTO notificationEntityToDTO(Notification notification) {
 		NotificationDTO notificationDTO = new NotificationDTO();

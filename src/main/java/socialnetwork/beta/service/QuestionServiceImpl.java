@@ -9,8 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 import socialnetwork.beta.dto.QuestionDTO;
 import socialnetwork.beta.entity.Profile;
 import socialnetwork.beta.entity.Question;
+import socialnetwork.beta.repo.NotificationRepo;
 import socialnetwork.beta.repo.ProfileRepo;
 import socialnetwork.beta.repo.QuestionRepo;
+import socialnetwork.beta.utils.NotificationUtils;
 import socialnetwork.beta.utils.QuestionUtils;
 
 @Service
@@ -19,6 +21,8 @@ public class QuestionServiceImpl implements QuestionService {
 	private QuestionRepo questionRepo;
 	@Autowired
 	private ProfileRepo profileRepo;
+	@Autowired
+	private NotificationRepo notificationRepo;
 
 	@Override
 	@Transactional
@@ -59,8 +63,12 @@ public class QuestionServiceImpl implements QuestionService {
 		Profile profileSender = profileRepo.findProfile(questionDTO.getIdProfileSender());
 		Profile profileReciver = profileRepo.findProfile(questionDTO.getIdProfileReciver());
 		Question question = QuestionUtils.questionEntityFromDTO(questionDTO, profileSender, profileReciver);
+		String idQuestion = questionRepo.addNewQuestion(question);
+		if(idQuestion != null) {
+			notificationRepo.addNewNotification(NotificationUtils.newNotificationEntityFromQuestion(question));
+		}
 		
-		return questionRepo.addNewQuestion(question);
+		return idQuestion;
 	}
 
 	@Override
