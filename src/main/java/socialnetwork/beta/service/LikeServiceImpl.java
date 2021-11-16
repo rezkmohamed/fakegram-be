@@ -33,7 +33,7 @@ public class LikeServiceImpl implements LikeService {
 		Profile profile = profileRepo.findProfile(likeDTO.getIdProfile());
 		Like likeToAdd = LikeUtils.DTOLikeToLikeEntity(likeDTO, profile, post);
 		String idNewLike = likeRepo.addLike(likeToAdd);
-		if(idNewLike != null) {
+		if(idNewLike != null && !likeDTO.getIdProfile().equals(post.getProfile().getIdProfile())) {
 			notificationRepo.addNewNotification(NotificationUtils.newNotificationEntityFromLike(likeToAdd));
 		}
 		

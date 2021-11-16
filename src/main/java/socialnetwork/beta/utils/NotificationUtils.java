@@ -5,6 +5,7 @@ import java.util.List;
 
 import socialnetwork.beta.dto.NotificationDTO;
 import socialnetwork.beta.dto.NotificationTypeDTO;
+import socialnetwork.beta.entity.Comment;
 import socialnetwork.beta.entity.Follow;
 import socialnetwork.beta.entity.Like;
 import socialnetwork.beta.entity.Notification;
@@ -29,6 +30,14 @@ public class NotificationUtils {
 		notification.setPost(like.getPost());
 		
 		return notification;
+	}
+	
+	public static Notification newNotificationEntityFromComment(Comment comment) {
+		/**
+		 * TODO
+		 */
+		
+		return null;
 	}
 	
 	

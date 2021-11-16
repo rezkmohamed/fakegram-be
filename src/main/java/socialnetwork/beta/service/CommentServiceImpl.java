@@ -11,9 +11,11 @@ import socialnetwork.beta.entity.Comment;
 import socialnetwork.beta.entity.Post;
 import socialnetwork.beta.entity.Profile;
 import socialnetwork.beta.repo.CommentRepo;
+import socialnetwork.beta.repo.NotificationRepo;
 import socialnetwork.beta.repo.PostRepo;
 import socialnetwork.beta.repo.ProfileRepo;
 import socialnetwork.beta.utils.CommentUtils;
+import socialnetwork.beta.utils.NotificationUtils;
 
 
 @Service
@@ -24,6 +26,8 @@ public class CommentServiceImpl implements CommentService {
 	private ProfileRepo profileRepo;
 	@Autowired
 	private PostRepo postRepo;
+	@Autowired
+	private NotificationRepo notificationRepo;
 	
 	@Override
 	@Transactional
@@ -41,8 +45,13 @@ public class CommentServiceImpl implements CommentService {
 		commentToAdd.setPost(post);
 		Profile profile = profileRepo.findProfile(idProfile);
 		commentToAdd.setProfile(profile);
+		String idNewComment = commentRepo.addComment(commentToAdd);
+		if(idNewComment != null && !idProfile.equals(post.getProfile().getIdProfile())) {
+			notificationRepo.addNewNotification(NotificationUtils.newNotificationEntityFromComment(commentToAdd));
+		}	
 		
-		return commentRepo.addComment(commentToAdd);
+		
+		return idNewComment;
 	}
 
 }
