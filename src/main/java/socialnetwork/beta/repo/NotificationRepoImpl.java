@@ -39,11 +39,11 @@ public class NotificationRepoImpl implements NotificationRepo {
 	}
 	
 	@Override
-	public int deleteLikeNotification(String idProfileNotificator, String idProfileToNotify) {
+	public int deleteLikeNotification(String idProfileNotificator, String idPost) {
 		Session session = entityManager.unwrap(Session.class);
-		Query query = session.createQuery("delete from Notification where id_profile_notificator = :idProfile1 AND id_profile_to_notify = :idProfile2 AND notification_type = :notifType");
+		Query query = session.createQuery("delete from Notification where id_profile_notificator = :idProfile1 AND id_post = :idPost AND notification_type = :notifType");
 		query.setParameter("idProfile1", idProfileNotificator);
-		query.setParameter("idProfile2", idProfileToNotify);
+		query.setParameter("idPost", idPost);
 		query.setParameter("notifType", 0);
 		
 		return query.executeUpdate();

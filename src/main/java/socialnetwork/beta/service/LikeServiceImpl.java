@@ -43,7 +43,9 @@ public class LikeServiceImpl implements LikeService {
 	@Override
 	@Transactional
 	public boolean deleteLike(String idProfile, String idPost) {
-		if(likeRepo.deleteLike(idProfile, idPost)) {
+		boolean isDeleted = likeRepo.deleteLike(idProfile, idPost);
+		if(isDeleted) {
+			notificationRepo.deleteLikeNotification(idProfile, idPost);
 			return true;
 		}
 		

@@ -9,7 +9,7 @@ public interface NotificationRepo {
 	
 	public int deleteFollowNotification(String idProfileNotificator, String idProfileToNotify);
 	
-	public int deleteLikeNotification(String idProfileNotificator, String idProfileToNotify);
+	public int deleteLikeNotification(String idProfileNotificator, String idPost);
 	
 	public String addNewNotification(Notification notification);
 	
