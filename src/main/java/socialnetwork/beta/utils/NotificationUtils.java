@@ -47,6 +47,7 @@ public class NotificationUtils {
 	public static Notification newNotificationEntityFromQuestion(Question question) {
 		Notification notification = new Notification();
 		notification.setNotificationType(NotificationTypeDTO.QUESTION);
+		notification.setProfileNotificator(question.getProfileSender());
 		notification.setProfileToNotify(question.getProfileReciver());
 		notification.setSeen(false);
 		

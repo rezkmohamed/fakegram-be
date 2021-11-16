@@ -28,5 +28,6 @@ public interface ProfileService {
 	public boolean updateProfile(ProfileDTO profileDTO);
 	
 	public boolean updatePassword(String idProfile, String oldPassword, String newPassword);
-
+	
+	public boolean uploadProfilePicture(MultipartFile file, String idProfile);
 }

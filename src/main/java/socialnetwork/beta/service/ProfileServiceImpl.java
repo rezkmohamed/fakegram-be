@@ -1,8 +1,12 @@
 package socialnetwork.beta.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,18 +18,17 @@ import socialnetwork.beta.entity.Post;
 import socialnetwork.beta.entity.Profile;
 import socialnetwork.beta.repo.PostRepo;
 import socialnetwork.beta.repo.ProfileRepo;
-import socialnetwork.beta.utils.ImgUtils;
 import socialnetwork.beta.utils.PostUtils;
 import socialnetwork.beta.utils.ProfileUtils;
 
 @Service
 public class ProfileServiceImpl implements ProfileService {
-//	@Autowired
-//	private ImgUtils imgUtils;
 	@Autowired
 	private ProfileRepo profileRepo;
 	@Autowired
 	private PostRepo postRepo;
+	@Value("${basePathFileSystem}")
+	private String basePathFileSystem;
 
 	@Override
 	@Transactional
@@ -147,6 +150,33 @@ public class ProfileServiceImpl implements ProfileService {
 		profileRepo.updateProfile(profile);
 		
 		return true;
+	}
+
+	@Override
+	@Transactional
+	public boolean uploadProfilePicture(MultipartFile file, String idProfile) {
+		String filename = file.getOriginalFilename();
+		String extension  = filename.substring(filename.lastIndexOf(".") + 1);
+		
+		if(extension.equalsIgnoreCase("jpeg") || extension.equalsIgnoreCase("png") || extension.equalsIgnoreCase("jpg")) {
+			String newProfilePic = UUID.randomUUID().toString()+ "." + extension;
+			try {
+				file.transferTo(new File(basePathFileSystem + newProfilePic));
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Profile profile = profileRepo.findProfile(idProfile);
+			profile.setProPic(newProfilePic);
+			profileRepo.saveProfile(profile);
+			return true;
+		}
+		
+		
+		return false;
 	}
 
 }
