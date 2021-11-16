@@ -33,11 +33,14 @@ public class NotificationUtils {
 	}
 	
 	public static Notification newNotificationEntityFromComment(Comment comment) {
-		/**
-		 * TODO
-		 */
+		Notification notification = new Notification();
+		notification.setNotificationType(NotificationTypeDTO.COMMENT);
+		notification.setProfileNotificator(comment.getProfile());
+		notification.setProfileToNotify(comment.getPost().getProfile());
+		notification.setSeen(false);
+		notification.setPost(comment.getPost());
 		
-		return null;
+		return notification;
 	}
 	
 	
