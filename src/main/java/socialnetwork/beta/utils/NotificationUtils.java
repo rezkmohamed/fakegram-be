@@ -6,6 +6,7 @@ import java.util.List;
 import socialnetwork.beta.dto.NotificationDTO;
 import socialnetwork.beta.dto.NotificationTypeDTO;
 import socialnetwork.beta.entity.Follow;
+import socialnetwork.beta.entity.Like;
 import socialnetwork.beta.entity.Notification;
 
 public class NotificationUtils {
@@ -17,6 +18,15 @@ public class NotificationUtils {
 		notification.setSeen(false);
 		
 		return notification;
+	}
+	
+	public static Notification newNotificationEntityFromLike(Like like) {
+		/**
+		 * TODO
+		 */
+		
+		
+		return null;
 	}
 	
 	

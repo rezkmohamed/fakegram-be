@@ -52,7 +52,4 @@ public class FollowServiceImpl implements FollowService {
 		}
 		return false;
 	}
-	
-	
-
 }

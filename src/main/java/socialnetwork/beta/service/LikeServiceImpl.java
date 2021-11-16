@@ -5,12 +5,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import socialnetwork.beta.dto.LikeDTO;
+import socialnetwork.beta.entity.Like;
 import socialnetwork.beta.entity.Post;
 import socialnetwork.beta.entity.Profile;
 import socialnetwork.beta.repo.LikeRepo;
+import socialnetwork.beta.repo.NotificationRepo;
 import socialnetwork.beta.repo.PostRepo;
 import socialnetwork.beta.repo.ProfileRepo;
 import socialnetwork.beta.utils.LikeUtils;
+import socialnetwork.beta.utils.NotificationUtils;
 
 @Service
 public class LikeServiceImpl implements LikeService {
@@ -20,14 +23,22 @@ public class LikeServiceImpl implements LikeService {
 	private ProfileRepo profileRepo;
 	@Autowired
 	private PostRepo postRepo;
+	@Autowired
+	private NotificationRepo notificationRepo;
 
 	@Override
 	@Transactional
 	public String addLike(LikeDTO likeDTO) {
 		Post post = postRepo.findPostById(likeDTO.getIdPost());
 		Profile profile = profileRepo.findProfile(likeDTO.getIdProfile());
+		Like likeToAdd = LikeUtils.DTOLikeToLikeEntity(likeDTO, profile, post);
+		String idNewLike = likeRepo.addLike(likeToAdd);
+		if(idNewLike != null) {
+			notificationRepo.addNewNotification(NotificationUtils.newNotificationEntityFromLike(likeToAdd));
+		}
 		
-		return likeRepo.addLike(LikeUtils.DTOLikeToLikeEntity(likeDTO, profile, post));
+		
+		return idNewLike;
 	}
 
 	@Override
