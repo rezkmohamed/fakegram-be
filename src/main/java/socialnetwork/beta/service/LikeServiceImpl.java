@@ -37,7 +37,6 @@ public class LikeServiceImpl implements LikeService {
 			notificationRepo.addNewNotification(NotificationUtils.newNotificationEntityFromLike(likeToAdd));
 		}
 		
-		
 		return idNewLike;
 	}
 

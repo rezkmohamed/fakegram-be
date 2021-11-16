@@ -21,10 +21,12 @@ public class NotificationUtils {
 	}
 	
 	public static Notification newNotificationEntityFromLike(Like like) {
-		/**
-		 * TODO
-		 */
-		
+		Notification notification = new Notification();
+		notification.setNotificationType(NotificationTypeDTO.LIKE);
+		notification.setProfileNotificator(like.getProfileLiker());
+		notification.setProfileToNotify(like.getPost().getProfile());
+		notification.setSeen(false);
+		notification.setPost(like.getPost());
 		
 		return null;
 	}
