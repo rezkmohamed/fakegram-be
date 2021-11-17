@@ -110,10 +110,12 @@ public class ProfileServiceImpl implements ProfileService {
 			profileDTO.setPostsCounter(postsDTO.size());
 			profileDTO.setFollowersCounter(profile.getFollowers().size());
 			profileDTO.setFollowingCounter(profile.getFollowing().size());
-			try {
-				profileDTO.setProPic(imgUtils.fileImgToBase64Encoding(profileDTO.getProPic()));
-			} catch (IOException e) {
-				e.printStackTrace();
+			if(profileDTO.getProPic() != null) {
+				try {
+					profileDTO.setProPic(imgUtils.fileImgToBase64Encoding(profileDTO.getProPic()));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 			return profileDTO;
 		}
