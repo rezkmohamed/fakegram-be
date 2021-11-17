@@ -1,12 +1,16 @@
 package socialnetwork.beta.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
 
 import socialnetwork.beta.dto.PostDTO;
 import socialnetwork.beta.entity.Post;
@@ -15,7 +19,6 @@ import socialnetwork.beta.repo.PostRepo;
 import socialnetwork.beta.repo.ProfileRepo;
 import socialnetwork.beta.utils.ImgUtils;
 import socialnetwork.beta.utils.PostUtils;
-import socialnetwork.beta.utils.ProfileUtils;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -25,6 +28,8 @@ public class PostServiceImpl implements PostService {
 	private ProfileRepo profileRepo;
 	@Autowired
 	private ImgUtils imgUtils;
+	@Value("${basePathFileSystem}")
+	private String basePathFileSystem;
 	
 	private void setProPicToPost(PostDTO postDTO) {
 		if(postDTO.getProfile().getProPic() != null) {
@@ -92,15 +97,34 @@ public class PostServiceImpl implements PostService {
 		if(!post.getProfile().getIdProfile().equals(idProfile)) {
 			return false;
 		}
-		
+
 		return postRepo.deletePostById(idPost);
 	}
 
 	@Override
 	@Transactional
 	public String savePostWithFileImg(MultipartFile img, String description, String idProfile) {
-		// TODO Auto-generated method stub
+		String filename = img.getOriginalFilename();
+		String extension  = filename.substring(filename.lastIndexOf(".") + 1);
+		Post postToSave = new Post();
+		Profile profile = profileRepo.findProfile(idProfile);
+		postToSave.setProfile(profile);
+		postToSave.setDescription(description);
+		
+		if(extension.equalsIgnoreCase("jpg") || extension.equalsIgnoreCase("jpeg") || extension.equalsIgnoreCase("png")) {
+			String newImg = UUID.randomUUID().toString()+ "." + extension;
+			try {
+				img.transferTo(new File(basePathFileSystem + newImg));
+				postToSave.setImg_post(newImg);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			return postRepo.savePost(postToSave);
+		}
+
 		return null;
 	}
-
 }
