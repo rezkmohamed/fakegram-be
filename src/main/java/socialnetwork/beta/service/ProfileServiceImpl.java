@@ -32,7 +32,7 @@ public class ProfileServiceImpl implements ProfileService {
 	private ImgUtils imgUtils;
 	@Value("${basePathFileSystem}")
 	private String basePathFileSystem;
-	
+
 	private void setProfilePicToProfiles(List<ProfileDTO> profiles) {
 		profiles.stream()
 		.forEach(p -> {
@@ -44,7 +44,7 @@ public class ProfileServiceImpl implements ProfileService {
 				}
 			}
 		});
-	}   
+	}
 
 	@Override
 	@Transactional
@@ -215,7 +215,6 @@ public class ProfileServiceImpl implements ProfileService {
 			profileRepo.saveProfile(profile);
 			return true;
 		}
-		
 		
 		return false;
 	}

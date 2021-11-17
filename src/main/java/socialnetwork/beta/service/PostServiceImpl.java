@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import socialnetwork.beta.dto.PostDTO;
 import socialnetwork.beta.entity.Post;
@@ -93,6 +94,13 @@ public class PostServiceImpl implements PostService {
 		}
 		
 		return postRepo.deletePostById(idPost);
+	}
+
+	@Override
+	@Transactional
+	public String savePostWithFileImg(MultipartFile img, String description, String idProfile) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

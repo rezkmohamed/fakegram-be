@@ -1,5 +1,7 @@
 package socialnetwork.beta.controller;
 
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +16,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import socialnetwork.beta.dto.PostDTO;
 import socialnetwork.beta.dto.ProfileDTO;
@@ -73,6 +78,21 @@ public class PostController {
 		postDTO.setIdProfile(idProfile);
 		String response = postService.savePost(postDTO);
 		if(response == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@PostMapping("/newpost")
+	public ResponseEntity<HttpStatus> addPost(
+			@RequestParam("myFile") MultipartFile file, 
+			@RequestParam("description") String description,
+			@RequestParam("date") String date,
+			MultipartHttpServletRequest request) throws IllegalStateException, IOException {
+		String idProfile = requestUtils.idProfileFromToken(request);
+		String newIdPost = postService.savePostWithFileImg(file, description, idProfile);
+		if(newIdPost == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
