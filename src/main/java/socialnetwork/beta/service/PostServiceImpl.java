@@ -1,5 +1,6 @@
 package socialnetwork.beta.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import socialnetwork.beta.entity.Post;
 import socialnetwork.beta.entity.Profile;
 import socialnetwork.beta.repo.PostRepo;
 import socialnetwork.beta.repo.ProfileRepo;
+import socialnetwork.beta.utils.ImgUtils;
 import socialnetwork.beta.utils.PostUtils;
 import socialnetwork.beta.utils.ProfileUtils;
 
@@ -20,12 +22,38 @@ public class PostServiceImpl implements PostService {
 	private PostRepo postRepo;
 	@Autowired
 	private ProfileRepo profileRepo;
-
+	@Autowired
+	private ImgUtils imgUtils;
+	
+	private void setProPicToPost(PostDTO postDTO) {
+		if(postDTO.getProfile().getProPic() != null) {
+			try {
+				postDTO.getProfile().setProPic(imgUtils.fileImgToBase64Encoding(postDTO.getProfile().getProPic()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void setProPicToPosts(List<PostDTO> postsDTO) {
+		postsDTO.stream()
+		.forEach(p -> {
+			if(p.getProfile().getProPic() != null) {
+				try {
+					p.getProfile().setProPic(imgUtils.fileImgToBase64Encoding(p.getProfile().getProPic()));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
 	@Override
 	@Transactional
 	public List<PostDTO> findAllPosts() {
 		List<Post> posts = postRepo.findAllPosts();
 		List<PostDTO> postsDTO = PostUtils.postToCompleteDTO(posts);
+		setProPicToPosts(postsDTO);
 		
 		return postsDTO;
 	}
@@ -41,6 +69,7 @@ public class PostServiceImpl implements PostService {
 	public PostDTO findPostById(String idPost) {		
 		Post post = postRepo.findPostById(idPost);
 		PostDTO postDTO = PostUtils.postToCompleteDTO(post);
+		setProPicToPost(postDTO);
 		
 		return postDTO;
 	}
