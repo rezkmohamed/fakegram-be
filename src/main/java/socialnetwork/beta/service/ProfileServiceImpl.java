@@ -18,6 +18,7 @@ import socialnetwork.beta.entity.Post;
 import socialnetwork.beta.entity.Profile;
 import socialnetwork.beta.repo.PostRepo;
 import socialnetwork.beta.repo.ProfileRepo;
+import socialnetwork.beta.utils.ImgUtils;
 import socialnetwork.beta.utils.PostUtils;
 import socialnetwork.beta.utils.ProfileUtils;
 
@@ -27,13 +28,28 @@ public class ProfileServiceImpl implements ProfileService {
 	private ProfileRepo profileRepo;
 	@Autowired
 	private PostRepo postRepo;
+	@Autowired
+	private ImgUtils imgUtils;
 	@Value("${basePathFileSystem}")
 	private String basePathFileSystem;
+	
+	private void setProfilePicToProfiles(List<Profile> profiles) {
+		profiles.stream()
+		.forEach(p -> {
+			try {
+				p.setProPic(imgUtils.fileImgToBase64Encoding(p.getProPic()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
+	}   
+
 
 	@Override
 	@Transactional
 	public List<ProfileDTO> findProfilesLikesPost(String idPost) {
 		List<Profile> profiles = profileRepo.findProfilesLikesPost(idPost);
+		setProfilePicToProfiles(profiles);
 		
 		return ProfileUtils.profileToDTO(profiles);
 	}
@@ -42,7 +58,8 @@ public class ProfileServiceImpl implements ProfileService {
 	@Transactional
 	public List<ProfileDTO> findFollowersProfile(String idProfile) {
 		List<Profile> profiles = profileRepo.findFollowersProfile(idProfile);
-		
+		setProfilePicToProfiles(profiles);
+
 		return ProfileUtils.profileToDTO(profiles);
 	}
 
@@ -50,7 +67,8 @@ public class ProfileServiceImpl implements ProfileService {
 	@Transactional
 	public List<ProfileDTO> findFollowingProfile(String idProfile) {
 		List<Profile> profiles = profileRepo.findFollowingProfile(idProfile);
-		
+		setProfilePicToProfiles(profiles);
+
 		return ProfileUtils.profileToDTO(profiles);
 	}
 
@@ -58,7 +76,8 @@ public class ProfileServiceImpl implements ProfileService {
 	@Transactional
 	public List<ProfileDTO> searchProfilesByName(String profileName) {
 		List<Profile> profiles = profileRepo.findProfilesByName(profileName);
-		
+		setProfilePicToProfiles(profiles);
+
 		return ProfileUtils.profileToDTO(profiles);
 	}
 
@@ -74,6 +93,11 @@ public class ProfileServiceImpl implements ProfileService {
 			profileDTO.setPostsCounter(postsDTO.size());
 			profileDTO.setFollowersCounter(profile.getFollowers().size());
 			profileDTO.setFollowingCounter(profile.getFollowing().size());
+			try {
+				profileDTO.setProPic(imgUtils.fileImgToBase64Encoding(profileDTO.getProPic()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			return profileDTO;
 		}
 		
