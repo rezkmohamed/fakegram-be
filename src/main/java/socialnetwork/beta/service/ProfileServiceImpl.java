@@ -33,52 +33,69 @@ public class ProfileServiceImpl implements ProfileService {
 	@Value("${basePathFileSystem}")
 	private String basePathFileSystem;
 	
-	private void setProfilePicToProfiles(List<Profile> profiles) {
+	private void setProfilePicToProfiles(List<ProfileDTO> profiles) {
 		profiles.stream()
 		.forEach(p -> {
-			try {
-				p.setProPic(imgUtils.fileImgToBase64Encoding(p.getProPic()));
-			} catch (IOException e) {
-				e.printStackTrace();
+			if(p.getProPic() != null) {
+				try {
+					p.setProPic(imgUtils.fileImgToBase64Encoding(p.getProPic()));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 	}   
-
 
 	@Override
 	@Transactional
 	public List<ProfileDTO> findProfilesLikesPost(String idPost) {
 		List<Profile> profiles = profileRepo.findProfilesLikesPost(idPost);
-		setProfilePicToProfiles(profiles);
+		List<ProfileDTO> profilesDTO = ProfileUtils.profileToDTO(profiles);
+
+		setProfilePicToProfiles(profilesDTO);
 		
-		return ProfileUtils.profileToDTO(profiles);
+		return profilesDTO;
 	}
 
 	@Override
 	@Transactional
 	public List<ProfileDTO> findFollowersProfile(String idProfile) {
 		List<Profile> profiles = profileRepo.findFollowersProfile(idProfile);
-		setProfilePicToProfiles(profiles);
+		List<ProfileDTO> profilesDTO = ProfileUtils.profileToDTO(profiles);
 
-		return ProfileUtils.profileToDTO(profiles);
+		setProfilePicToProfiles(profilesDTO);
+		
+		return profilesDTO;
 	}
 
 	@Override
 	@Transactional
 	public List<ProfileDTO> findFollowingProfile(String idProfile) {
 		List<Profile> profiles = profileRepo.findFollowingProfile(idProfile);
-		setProfilePicToProfiles(profiles);
+		List<ProfileDTO> profilesDTO = ProfileUtils.profileToDTO(profiles);
 
-		return ProfileUtils.profileToDTO(profiles);
+		setProfilePicToProfiles(profilesDTO);
+		
+		return profilesDTO;
 	}
 
 	@Override
 	@Transactional
 	public List<ProfileDTO> searchProfilesByName(String profileName) {
 		List<Profile> profiles = profileRepo.findProfilesByName(profileName);
-		setProfilePicToProfiles(profiles);
+		List<ProfileDTO> profilesDTO = ProfileUtils.profileToDTO(profiles);
+		profilesDTO.stream()
+		.forEach(p -> {
+			if(p.getProPic() != null) {
+				try {
+					p.setProPic(imgUtils.fileImgToBase64Encoding(p.getProPic()));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 
-		return ProfileUtils.profileToDTO(profiles);
+		return profilesDTO;
 	}
 
 	@Override
@@ -187,10 +204,8 @@ public class ProfileServiceImpl implements ProfileService {
 			try {
 				file.transferTo(new File(basePathFileSystem + newProfilePic));
 			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			Profile profile = profileRepo.findProfile(idProfile);
