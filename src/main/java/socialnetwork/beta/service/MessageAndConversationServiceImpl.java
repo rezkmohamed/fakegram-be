@@ -1,5 +1,6 @@
 package socialnetwork.beta.service;
 
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,7 @@ import socialnetwork.beta.entity.Message;
 import socialnetwork.beta.entity.Profile;
 import socialnetwork.beta.repo.MessageAndConversationRepo;
 import socialnetwork.beta.repo.ProfileRepo;
+import socialnetwork.beta.utils.ImgUtils;
 import socialnetwork.beta.utils.MessageAndConversationUtils;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +28,25 @@ public class MessageAndConversationServiceImpl implements MessageAndConversation
 	private MessageAndConversationRepo messageAndConversationRepo;
 	@Autowired
 	private ProfileRepo profileRepo;
+	@Autowired
+	private ImgUtils imgUtils;
+	
+	private void setImgsToProfilesInConversation(ConversationDTO conv) {
+		if(conv.getFirstProfile().getProPic() != null) {
+			try {
+				conv.getFirstProfile().setProPic(imgUtils.fileImgToBase64Encoding(conv.getFirstProfile().getProPic()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		if(conv.getSecondProfile().getProPic() != null) {
+			try {
+				conv.getSecondProfile().setProPic(imgUtils.fileImgToBase64Encoding(conv.getSecondProfile().getProPic()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	@Override
 	@Transactional
@@ -59,6 +80,10 @@ public class MessageAndConversationServiceImpl implements MessageAndConversation
 		List<ConversationDTO> ris = MessageAndConversationUtils.conversationEntityToDTO(conversations);
 		
 		for(ConversationDTO conv : ris) {
+			
+			setImgsToProfilesInConversation(conv);
+			
+			
 			conv.setMessages( conv.getMessages().stream().sorted(Comparator.comparing(
 					MessageDTO::getDate,
 					Comparator.reverseOrder()
