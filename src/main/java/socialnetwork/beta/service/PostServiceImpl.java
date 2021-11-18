@@ -54,6 +54,17 @@ public class PostServiceImpl implements PostService {
 		});
 	}
 	
+	private void setImgToPost(List<PostDTO> posts) {
+		posts.stream()
+		.forEach(p -> {
+			try {
+				p.setImg(imgUtils.fileImgToBase64Encoding(p.getImg()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
+	}
+	
 	@Override
 	@Transactional
 	public List<PostDTO> findAllPosts() {
@@ -72,17 +83,6 @@ public class PostServiceImpl implements PostService {
 		setImgToPost(posts);
 		
 		return posts;
-	}
-
-	private void setImgToPost(List<PostDTO> posts) {
-		posts.stream()
-		.forEach(p -> {
-			try {
-				p.setImg(imgUtils.fileImgToBase64Encoding(p.getImg()));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		});
 	}
 
 	@Override

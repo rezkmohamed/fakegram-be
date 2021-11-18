@@ -29,6 +29,8 @@ public class ProfileServiceImpl implements ProfileService {
 	@Autowired
 	private PostRepo postRepo;
 	@Autowired
+	private PostService postService;
+	@Autowired
 	private ImgUtils imgUtils;
 	@Value("${basePathFileSystem}")
 	private String basePathFileSystem;
@@ -103,8 +105,7 @@ public class ProfileServiceImpl implements ProfileService {
 	public ProfileDTO findProfileById(String idProfile) {
 		Profile profile = profileRepo.findProfile(idProfile);
 		if(profile != null) {
-			List<Post> posts = postRepo.findPostsProfilePage(idProfile);
-			List<PostDTO> postsDTO = PostUtils.postToDTO(posts);
+			List<PostDTO> postsDTO = postService.findPostsProfilePage(idProfile);
 			ProfileDTO profileDTO = ProfileUtils.profileToDTO(profile);
 			profileDTO.setPosts(postsDTO);
 			profileDTO.setPostsCounter(postsDTO.size());
