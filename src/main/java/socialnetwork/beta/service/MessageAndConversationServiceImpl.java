@@ -95,8 +95,6 @@ public class MessageAndConversationServiceImpl implements MessageAndConversation
 			}
 		}
 		
-		
-		
 		return ris.stream().sorted(Comparator.comparing(ConversationDTO::getLatestMessageDate, 
 				Comparator.reverseOrder())).collect(Collectors.toList());
 	}
@@ -169,5 +167,4 @@ public class MessageAndConversationServiceImpl implements MessageAndConversation
 		
 		return messageAndConversationRepo.setMessagesAsSeen(idConversation, idLoggedProfile);
 	}
-
 }
