@@ -88,7 +88,6 @@ public class PostController {
 	public ResponseEntity<HttpStatus> addPost(
 			@RequestParam("myFile") MultipartFile file, 
 			@RequestParam("description") String description,
-			@RequestParam("date") String date,
 			MultipartHttpServletRequest request) throws IllegalStateException, IOException {
 		String idProfile = requestUtils.idProfileFromToken(request);
 		String newIdPost = postService.savePostWithFileImg(file, description, idProfile);

@@ -59,6 +59,7 @@ public class PostServiceImpl implements PostService {
 	public List<PostDTO> findAllPosts() {
 		List<Post> posts = postRepo.findAllPosts();
 		List<PostDTO> postsDTO = PostUtils.postToCompleteDTO(posts);
+		setImgToPost(postsDTO);
 		setProPicToPosts(postsDTO);
 		
 		return postsDTO;
@@ -67,7 +68,21 @@ public class PostServiceImpl implements PostService {
 	@Override
 	@Transactional
 	public List<PostDTO> findPostsProfilePage(String idProfile) {
-		return PostUtils.postToDTO(postRepo.findPostsProfilePage(idProfile));
+		List<PostDTO> posts = PostUtils.postToDTO(postRepo.findPostsProfilePage(idProfile));
+		setImgToPost(posts);
+		
+		return posts;
+	}
+
+	private void setImgToPost(List<PostDTO> posts) {
+		posts.stream()
+		.forEach(p -> {
+			try {
+				p.setImg(imgUtils.fileImgToBase64Encoding(p.getImg()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
 	}
 
 	@Override
@@ -75,6 +90,11 @@ public class PostServiceImpl implements PostService {
 	public PostDTO findPostById(String idPost) {		
 		Post post = postRepo.findPostById(idPost);
 		PostDTO postDTO = PostUtils.postToCompleteDTO(post);
+		try {
+			postDTO.setImg(imgUtils.fileImgToBase64Encoding(postDTO.getImg()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		setProPicToPost(postDTO);
 		
 		return postDTO;
